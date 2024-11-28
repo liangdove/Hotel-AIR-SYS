@@ -748,10 +748,10 @@ class StatisticController(models.Model):
             dic.update(request_id=r.request_id,
                        request_time=r.request_time,
                        room_id=r.room_id,
-                       operation=r.get_operation_display(),
+                       operation=r.operation,
                        current_temp=r.current_temp,
                        target_temp=r.target_temp,
-                       fan_speed=r.get_fan_speed_display(),
+                       fan_speed=r.fan_speed,
                        fee=r.fee)
             detail.append(dic)
 
