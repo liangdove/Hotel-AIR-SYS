@@ -35,6 +35,8 @@
                 radial-gradient(circle, var(--background-color) 1px, transparent 1px) 0 0 / 20px 20px,
                 radial-gradient(circle, var(--background-color) 1px, transparent 1px) 10px 10px / 20px 20px;
             background-color: var(--primary-color);
+            margin: 0;
+            padding: 0;
         }
         
         .header {
@@ -85,18 +87,21 @@
             margin-left: 250px;
             padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* 让内容垂直排列 */
+            justify-content: flex-start;
             align-items: center;
             height: 100vh;
+            overflow-y: auto;
         }
         
         .form-cont {
             background-color: var(--accent-color);
-            padding: 20px;
+            padding: 45px;
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 1200px;
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
         }
         
         .screen {
@@ -106,57 +111,70 @@
             border-radius: 10px;
             background-color: var(--accent-color);
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            width: 240px;
-        }
-        
-        .screen h5 {
-            color: var(--primary-color);
-        }
-        
-        .screen p {
-            margin: 5px 0;
-            white-space: nowrap;
+            width: 100%;  
+            max-width: 400px; 
+            margin-bottom: 20px;
             overflow: hidden;
-            text-overflow: ellipsis;
+        }
+        
+        table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        /* Make sure the content fits within the page */
+        .screen table td {
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .side-navbar {
+                width: 200px;
+            }
+
+            .content-inner {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            .screen {
+                width: 100%;
+                max-width: none;
+                margin-bottom: 10px;
+            }
+
+            .screen table td {
+                font-size: 12px;
+            }
         }
     </style>
 
     <script type="text/javascript">
         $(document).ready(function(){
-            // 自动刷新页面,10秒
             setTimeout(function(){
                 location.reload();
             }, 10000);
         });
     </script>
 </head>
-
 <body>
 
-<!--====================================================
-                     MAIN NAVBAR
-======================================================-->
 <header class="header">
     <nav class="navbar navbar-expand-lg ">
         <h3 class='col-sm-12' style="text-align:center">空调管理员</h3>
     </nav>
 </header>
 
-<!--====================================================
-                    PAGE CONTENT
-======================================================-->
 <div class="page-content d-flex align-items-stretch">
-
-    <!--***** SIDE NAVBAR *****-->
     <nav class="side-navbar">
         <div class="sidebar-header d-flex align-items-center">
             <div class="avatar"></div>
             <div class="title">
-                <h4 class="h4">切换身份</h4>
+                <h4 class="h4"></h4>
             </div>
         </div>
         <hr>
-        <!-- Sidebar Navigation Menus-->
         <ul class="list-unstyled">
             <li> <a href="/recp"><i class="icon-home"></i>前台</a></li>
             <li> <a href="/manager"> <i class="fa fa-bar-chart"></i>经理</a></li>
@@ -170,7 +188,6 @@
     <div class="content-inner form-cont">
         <div class="row">
             <div class="col-md-12">
-
                 <div class="card form" id="form1">
                     <div class="card-header">
                         <h5>监视界面</h5>
@@ -181,7 +198,7 @@
                         <tr>
                             <td class="screen">
                                 <table style="width:100%">
-                                    <tr><td><h5>房间：{{room_id.1}}</h5></td><tr>
+                                    <tr><td><h5>房间1：{{room_id.1}}</h5></td></tr>
                                     <tr>
                                         <td><p id="r1">状态:{{ state.1 }}</p></td>
                                         <td><p>风速：{{fan_speed.1}}</p></td>
@@ -196,9 +213,12 @@
                                     </tr>
                                 </table>
                             </td>
+                        </tr>
+
+                        <tr>
                             <td class="screen">
                                 <table style="width:100%">
-                                    <tr><td><h5>房间：{{room_id.2}}</h5></td><tr>
+                                    <tr><td><h5>房间2：{{room_id.2}}</h5></td></tr>
                                     <tr>
                                         <td><p id="r2">状态:{{ state.2 }}</p></td>
                                         <td><p>风速：{{fan_speed.2}}</p></td>
@@ -213,10 +233,12 @@
                                     </tr>
                                 </table>
                             </td>
+                        </tr>
 
+                        <tr>
                             <td class="screen">
                                 <table style="width:100%">
-                                    <tr><td><h5>房间：{{room_id.3}}</h5></td><tr>
+                                    <tr><td><h5>房间3：{{room_id.3}}</h5></td></tr>
                                     <tr>
                                         <td><p id="r3">状态:{{ state.3 }}</p></td>
                                         <td><p>风速：{{fan_speed.3}}</p></td>
@@ -231,12 +253,12 @@
                                     </tr>
                                 </table>
                             </td>
-
                         </tr>
+
                         <tr>
                             <td class="screen">
                                 <table style="width:100%">
-                                    <tr><td><h5>房间：{{room_id.4}}</h5></td><tr>
+                                    <tr><td><h5>房间4：{{room_id.4}}</h5></td></tr>
                                     <tr>
                                         <td><p id="r4">状态:{{ state.4 }}</p></td>
                                         <td><p>风速：{{fan_speed.4}}</p></td>
@@ -251,9 +273,12 @@
                                     </tr>
                                 </table>
                             </td>
+                        </tr>
+
+                        <tr>
                             <td class="screen">
                                 <table style="width:100%">
-                                    <tr><td><h5>房间：{{room_id.5}}</h5></td><tr>
+                                    <tr><td><h5>房间5：{{room_id.5}}</h5></td></tr>
                                     <tr>
                                         <td><p id="r5">状态:{{ state.5 }}</p></td>
                                         <td><p>风速：{{fan_speed.5}}</p></td>
@@ -268,24 +293,15 @@
                                     </tr>
                                 </table>
                             </td>
-
-                            <td class="screen">
-                                <table style="width:100%">
-                                    <tr><td><h5>维修中...</h5></td><tr>
-                                </table>
-                            </td>
                         </tr>
                     </table>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Global Javascript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
-
 </html>

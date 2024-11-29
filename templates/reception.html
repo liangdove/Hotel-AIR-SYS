@@ -83,7 +83,7 @@
         .content-inner {
             margin-left: 250px; /* 左侧外边距 */
             padding: 20px; /* 内边距 */
-            display: flex; /* 弹性布局 */
+            display: table; /* 布局 */
             justify-content: center; /* 水平居中 */
             align-items: center; /* 垂直居中 */
             height: 100vh; /* 高度 */
@@ -91,27 +91,59 @@
         
         .form-cont {
             background-color: var(--accent-color); /* 背景颜色，浅灰色 */
-            padding: 20px; /* 内边距 */
+            padding: 30px; /* 内边距增加 */
             border-radius: 15px; /* 边框圆角 */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
-            width: 80%; /* 宽度 */
-            max-width: 1200px; /* 最大宽度 */
+            width: 90%; /* 宽度调整 */
+            max-width: 1100px; /* 最大宽度调整 */
+            margin: 0 auto; /* 居中对齐 */
         }
         
         .form-group {
             margin-bottom: 20px; /* 底部外边距 */
         }
         
+        .col-md-5 {
+            flex: 0 0 50%; /* 每列占据50% */
+            max-width: 50%; /* 最大宽度50% */
+            padding-right: 30px; /* 右侧内边距 */
+            padding-left: 30px; /* 左侧内边距 */
+        }
+        
+        .form-group label {
+            font-weight: bold; /* 加粗标签 */
+        }
+        
         .form-control {
             border-radius: 5px; /* 边框圆角 */
             border: 1px solid var(--border-color); /* 边框 */
-            padding: 10px; /* 内边距 */
-            width: 100%; /* 宽度 */
+            padding: 12px; /* 增加内边距 */
+            font-size: 16px; /* 字体大小 */
+            width: 100%; /* 宽度调整 */
+        }
+        
+        .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+        
+        .col-9 {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* 左对齐 */
+        }
+        
+        .col-9 input[type="date"] {
+            font-size: 16px; /* 字体大小 */
+            padding: 12px; /* 增加内边距 */
+            width: 100%; /* 宽度调整 */
+            border-radius: 5px; /* 边框圆角 */
+            border: 1px solid var(--border-color); /* 边框 */
         }
         
         .btn-general {
             border-radius: 5px; /* 边框圆角 */
-            padding: 10px 20px; /* 内边距 */
+            padding: 12px 25px; /* 增加按钮内边距 */
             cursor: pointer; /* 鼠标指针样式 */
             transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
         }
@@ -137,6 +169,7 @@
             background-color: var(--hover-color); /* 悬停背景颜色，绿色 */
             color: var(--text-color); /* 悬停文本颜色，白色 */
         }
+        
     </style>
 </head>
 
@@ -232,7 +265,6 @@
             </div>
         </div>
     </div>
-
 
 </body>
 
