@@ -8,7 +8,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 from django.db.models import Q
 import os
-
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 # 下面这个网站提供了详细的字段类型参考，请大家仔细比较，选择最优字段类型。
 # note: https://docs.djangoproject.com/zh-hans/2.2/ref/models/fields/#field-types
@@ -74,9 +76,10 @@ class ServingQueue(models.Model):
 
     def auto_fee_temp(self, mode):
         """
-        回温和计费函数，设定风速H:1元/min,即0.016元/s,回温2℃/min，即0.03℃/s
-        M:0.5元/min,即0.008元/s,回温1.5℃/min，即0.025℃/s
-        L:0.3元/min,即0.005元/s,回温1℃/min，即0.016℃/s
+        1元/度；
+        回温和计费函数，设定风速H:1元/min,即0.016元/s,
+        M:0.5元/min,即0.008元/s,
+        L:0.3333元/min,即0.005元/s,
         mode=1,制热
         mode=2,制冷
         :return:
@@ -85,13 +88,13 @@ class ServingQueue(models.Model):
             for room in self.room_list:
                 if room.fan_speed == 1:
                     room.fee += 0.016
-                    room.current_temp += 0.03
+                    room.current_temp += 0.016
                 elif room.fan_speed == 2:
                     room.fee += 0.008
-                    room.current_temp += 0.025
+                    room.current_temp += 0.008
                 else:
                     room.fee += 0.005
-                    room.current_temp += 0.016
+                    room.current_temp += 0.005
             timer = threading.Timer(1, self.auto_fee_temp, [1])  # 每1秒执行一次函数
             timer.start()
         else:
@@ -637,7 +640,7 @@ class Server(models.Model):
         self.state = 2  # 状态为FREE
         return self.fee
 
-    def set_serve_time(self):
+    def set_erve_time(self):
         """
         修改服务时长
         :return:
@@ -743,20 +746,42 @@ class StatisticController(models.Model):
         """
         detail = []
         rdr = Room.objects.filter(room_id=room_id, request_time__range=(begin_date, end_date)).order_by('-request_time')
+        last_record = rdr.last()  # 取最早的一条
+        first_record = rdr.first()  # 取最新的一条
         for r in rdr:
             dic = {}
             dic.update(request_id=r.request_id,
                        request_time=r.request_time,
                        room_id=r.room_id,
-                       operation=r.operation,
-                       current_temp=r.current_temp,
-                       target_temp=r.target_temp,
+                       operation_type=r.operation,
+                       current_temperation=r.current_temp,
+                       target_temperation=r.target_temp,
                        fan_speed=r.fan_speed,
-                       fee=r.fee)
+                       air_fee=r.fee,
+                       fee_rate = "1元/度",
+                       total_server_time='')
             detail.append(dic)
+        
+        # 计算总服务器时间并更新最后一条记录
+        if last_record and first_record:  # 确保记录存在
+            # 确保总时长不为负，并保留一位小数
+            total_server_time1 = abs((last_record.request_time - first_record.request_time).total_seconds())
+            total_server_time1 = round(total_server_time1, 1)
+            detail[0]['total_server_time'] = str(total_server_time1)  # 用键值对方式更新字典
 
-        for d in detail:
-            print(d)
+        # 根据 operation 字段映射操作名称
+        operation_mapping = {1: '调温', 2: '调风', 3: '开机', 4: '关机'}
+        for item in detail:
+            if item['operation_type'] in operation_mapping:
+                item['operation_type'] = operation_mapping[item['operation_type']]
+        
+        # 根据 fan_speed 字段映射操作名称
+        fan_mapping = {1: '高速', 2: '中速', 3: '低速'}
+        for item in detail:
+            if item['fan_speed'] in fan_mapping:
+                item['fan_speed'] = fan_mapping[item['fan_speed']]
+            #for d in detail:
+            #    print(d)
         return detail
 
     @staticmethod
@@ -774,11 +799,13 @@ class StatisticController(models.Model):
         file_header = ["request_id",
                        "request_time",
                        "room_id",
-                       "operation",
-                       "current_temp",
-                       "target_temp",
+                       "operation_type",
+                       "current_temperation",
+                       "target_temperation",
                        "fan_speed",
-                       "fee"]
+                       "air_fee",
+                       "fee_rate",
+                       "total_server_time"]
 
         # 写入数据
         with open("./result/detailed_list.csv", "w")as csvFile:
@@ -791,6 +818,7 @@ class StatisticController(models.Model):
             csvFile.close()
             return True
 
+    from datetime import datetime
     @staticmethod
     def create_bill(room_id, begin_date, end_date):
         """
@@ -803,8 +831,21 @@ class StatisticController(models.Model):
         bill = Room.objects.filter(room_id=room_id, request_time__range=(begin_date, end_date)) \
             .order_by('-request_time')[0]
         print("fee=%f" % bill.fee)
+        
+        room_fee_mapping = {1: 100, 2: 125, 3: 150, 4:200, 5:100}
+        
+        room_fee = room_fee_mapping.get(room_id, 0)
+        # room_fee = room_fee_mapping.get(room_id, 0) + end_date和begin_date转成日期类型，然后
+        # 计算时间差（天数）
+        end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+        begin_date = datetime.strptime(begin_date, "%Y-%m-%d").date()
+        date_diff = abs((end_date - begin_date).days)  # .days 返回天数的整数部分
+        room_fee = room_fee * date_diff
+        # 计算总费用
+        add_fee = room_fee + bill.fee
+        
 
-        return bill.fee
+        return bill.fee, room_fee, add_fee
 
     @staticmethod
     def print_bill(room_id, begin_date, end_date):
@@ -815,13 +856,15 @@ class StatisticController(models.Model):
         :param end_date: endDay
         :return:返回房间的账单费用
         """
-        fee = StatisticController.create_bill(room_id, begin_date, end_date)
+        room_id = int(room_id)
+        air_fee, room_fee, add_fee = StatisticController.create_bill(room_id, begin_date, end_date)
 
+            
         with open('./result/bill.csv', 'w') as csv_file:
             writer = csv.writer(csv_file)
-            writer.writerow(["room_id", "fee"])
-            writer.writerow([room_id, fee])
-        return fee
+            writer.writerow(["room_id", "air_fee","room_fee","add_fee"])
+            writer.writerow([room_id, air_fee, room_fee, add_fee])
+        return air_fee
 
     @staticmethod
     def create_report(room_id, type_report, year=-1, month=-1, week=-1):
@@ -851,17 +894,22 @@ class StatisticController(models.Model):
         else:
             """打印周报"""
             try:
+                week="  "+str(week)
                 operations = Room.objects.filter(
                     Q(room_id=room_id) & (Q(request_time__year=year) & Q(request_time__week=week))).order_by(
                     '-request_time')
             except ObjectDoesNotExist:
                 print("Either the room or time doesn't exist.")
+        
+        # room_weeks = Room.objects.values('request_time__week').distinct() # 打印每个年份值 
+        # for week in room_weeks: print("现在的week是："['request_time__week'])
+        
         report = {}
         report.update(room_id=room_id)
         # 开关次数
         switch_times = operations.filter(Q(operation=3) | Q(operation=4)).count()
         report.update(switch_times=switch_times)
-        # 详单条数
+        # 操作次数
         detailed_num = len(operations)
         report.update(detailed_num=detailed_num)
         # 调温次数
@@ -925,69 +973,60 @@ class StatisticController(models.Model):
 
     @staticmethod
     def draw_report(room_id=-1, type_report=1, year=-1, month=-1, week=-1):
-        import matplotlib.pyplot as plt
+        plt.rcParams['font.sans-serif'] = ['SimHei']  # 黑体
+        plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+
         # 如果没有输入房间号，逐个
         if room_id == -1:
-            # fig, ax1 = plt.subplots(321)
-            # ax1.pie(report0.values(), report0.keys())
-            # plt.show()
-            import numpy as np
-            import pandas as pd
-
-            # data = [[66386, 174296, 75131, 577908, 32015],
-            #         [58230, 381139, 78045, 99308, 160454],
-            #         [89135, 80552, 152558, 497981, 603535],
-            #         [78415, 81858, 150656, 193263, 69638],
-            #         [139361, 331509, 343164, 781380, 52269]]
-            data = []
             global report
+            data = []
             rows = []
-            for i in range(1,6):
+            
+            # 收集报告数据
+            for i in range(1, 6):
                 report = StatisticController.create_report(i, type_report, year, month, week)
                 data.append(list(report.values())[1:-2])
-                rows.append('room' + str(report['room_id']))
+                rows.append('房间' + str(report['room_id']))
+            
             columns = list(report.keys())[1:-2]
             rows = tuple(rows)
-            # print(data)
-            # print(columns)
-            # print(rows)
 
-            # table(cellText=None, cellColours=None,cellLoc='right', colWidths=None,rowLabels=None, rowColours=None, rowLoc='left',
-            # colLabels=None, colColours=None, colLoc='center',loc='bottom', bbox=None)
-            # data = [[66386, 174296, 75131, 577908, 32015],
-            #         [58230, 381139, 78045, 99308, 160454],
-            #         [89135, 80552, 152558, 497981, 603535],
-            #         [78415, 81858, 150656, 193263, 69638],
-            #         [139361, 331509, 343164, 781380, 52269]]
-            # columns = ('Freeze', 'Wind', 'Flood', 'Quake', 'Hail')
-            # rows = ['%d year' % x for x in (100, 50, 20, 10, 5)]
-            df = pd.DataFrame(data, columns=columns,
-                              index=rows)
-            # print(df)
-            df.plot(kind='barh', grid=True, colormap='YlGnBu', stacked=True,figsize=(15,5))  # 创建堆叠图
-            print(data)
-            data.reverse()
-            table = plt.table(cellText=data,
-                              cellLoc='center',
-                              cellColours=None,
-                              rowLabels=rows,
-                              rowColours=plt.cm.BuPu(np.linspace(0, 0.5, len(rows)))[::-1],  # BuPu可替换成其他colormap
-                              colLabels=columns,
-                              colColours=plt.cm.Reds(np.linspace(0, 0.5, len(columns)))[::-1],
-                              rowLoc='right',
-                              loc='bottom',
-                              fontsize=10.0)
-            table.auto_set_font_size(False)
-            table.set_fontsize(7)
-            table.scale(1, 1)
-            # cellText：表格文本
-            # cellLoc：cell内文本对齐位置
-            # rowLabels：行标签
-            # colLabels：列标签
-            # rowLoc：行标签对齐位置
-            # loc：表格位置 → left，right，top，bottom
-            plt.subplots_adjust(left=0.2, bottom=0.3)
-            plt.xticks([])  # 加上的话会显得混乱，去掉就看的清了。
-            plt.savefig('./result/report.png', dpi=300)
-            # plt.show()
-            # 不显示x轴标注
+            # 创建DataFrame
+            df = pd.DataFrame(data, columns=columns, index=rows)
+
+            # 创建图形和坐标轴
+            fig, ax = plt.subplots(figsize=(15, 6))
+
+            # 绘制每个房间的数据作为折线图
+            for i, row in enumerate(rows):
+                ax.plot(columns, df.iloc[i], label=row, marker='o', linestyle='-', linewidth=2, markersize=6)
+
+            # 定制网格和坐标轴
+            ax.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
+            ax.set_facecolor('whitesmoke')
+
+            # 设置图表标题
+            ax.set_title('各房间报告数据 (折线图)', fontsize=16, fontweight='bold', color='darkblue')
+
+            # 设置x轴和y轴标签
+            if(type_report==1):ax.set_xlabel('报告类型: 月报', fontsize=12)
+            elif(type_report==2):ax.set_xlabel('报告类型: 周报', fontsize=12)
+            ax.set_ylabel('数值', fontsize=12)
+
+            # 设置x轴的中文标签
+            # 假设原始的报告类型是英文的，可以将其替换为中文
+            x_labels = ['报告A', '报告B', '报告C', '报告D']  # 根据实际需要修改
+            ax.set_xticks(range(len(x_labels)))  # 设置x轴的刻度位置
+            ax.set_xticklabels(x_labels, fontsize=10)  # 设置x轴标签为中文
+
+            # 添加图例
+            ax.legend(title="房间", title_fontsize=10, fontsize=9, loc='upper left')
+
+            # 调整图表的布局和间距
+            plt.subplots_adjust(left=0.1, right=0.9, bottom=0.2, top=0.85)
+
+            # 将图表保存为高分辨率PNG文件
+            plt.savefig('./result/report_line_plot.png', dpi=300)
+
+            # 显示图表（可选，仅在交互式会话中使用）
+            plt.show()
