@@ -1,0 +1,209 @@
+:root {
+    --color-1: #ffffff;  /* 主色 */
+    --color-2: #262733;  /* 字体颜色 */
+    --color-3: #1b1c1c;  /* 按钮背景颜色 */
+    --color-4: #60d4b9;  /* 按钮颜色 */
+    --color-5: #e2fcff;  /* 背景色 */
+    --color-6: #648f9c;  /* 屏幕背景色 */
+    --color-7: #292530;  /* 标题字体颜色 */
+    --color-8: #1b2935;  /* 辅助文本颜色 */
+    --color-9: #aaaaa8;  /* 浅灰色背景 */
+}
+
+/* 页面整体布局 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-5);
+    margin: 0;
+    padding: 0;
+}
+
+/* 外层容器 */
+.outer-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--color-5);
+    border-radius: 10px;
+}
+
+/* 主导航栏 */
+.header {
+    background-color: var(--color-3);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.navbar h3 {
+    color: var(--color-1);
+    text-align: center;
+    font-size: 24px;
+}
+
+/* 侧边导航栏 */
+.side-navbar {
+    background-color: var(--color-6);
+    padding: 20px;
+    width: 250px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-right: none; 
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-header .avatar {
+    background-color: var(--color-4);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.sidebar-header .title h4 {
+    color: var(--color-7);
+}
+
+.sidebar-header .title h4 {
+    font-size: 18px;
+}
+
+.side-navbar ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.side-navbar ul li {
+    margin-bottom: 10px;
+}
+
+.side-navbar ul li a {
+    color: var(--color-1);
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.side-navbar ul li a:hover {
+    color: var(--color-4);
+}
+
+/* 按钮组 */
+.button-group {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-group .btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.button-group .btn-blue {
+    background-color: var(--color-4);
+    color: var(--color-1);
+    border: none;
+}
+
+.button-group .btn-blue:hover {
+    background-color: #48c6b8;
+    transform: scale(1.05);
+}
+
+.button-group .btn-white {
+    background-color: var(--color-1);
+    color: var(--color-3);
+    border: 1px solid var(--color-4);
+}
+
+.button-group .btn-white:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.05);
+}
+
+/* 页面内容部分 */
+.page-content {
+    display: flex;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* 表单 */
+.form-cont {
+    flex-grow: 1;
+    background-color: var(--color-9);
+    padding: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: none; 
+}
+
+/* 表单卡片 */
+.card {
+    background-color: var(--color-5);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* 卡片头部 */
+.card-header h5 {
+    color: var(--color-7);
+    font-size: 22px;
+}
+
+/* 表单控件 */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* 标签样式 */
+label {
+    font-size: 16px;
+    color: var(--color-7);
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* 输入框和下拉框 */
+input.form-control, select.form-control {
+    width: 100%;  /* 使用100%宽度 */
+    max-width: 90%;  /* 设置最大宽度，防止右边贴边 */
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: var(--color-5);
+    color: var(--color-8);
+    box-sizing: border-box;  /* 包括内边距和边框在内的宽度计算 */
+}
+
+/* 聚焦时的效果 */
+input.form-control:focus, select.form-control:focus {
+    border-color: var(--color-4);
+    outline: none;
+}
+
+/* 输入框提示文本 */
+small.form-text {
+    font-size: 14px;
+    color: var(--color-8);
+}
+
+/* 浅灰色背景 */
+.form-cont {
+    background-color: var(--color-9);
+}
+
+/* 表单控件的聚焦效果 */
+input.form-control:focus, select.form-control:focus {
+    outline: none;
+    border-color: var(--color-4);
+}
