@@ -74,9 +74,10 @@ class ServingQueue(models.Model):
 
     def auto_fee_temp(self, mode):
         """
-        回温和计费函数，设定风速H:1元/min,即0.016元/s,回温2℃/min，即0.03℃/s
-        M:0.5元/min,即0.008元/s,回温1.5℃/min，即0.025℃/s
-        L:0.3元/min,即0.005元/s,回温1℃/min，即0.016℃/s
+        1元/度；
+        回温和计费函数，设定风速H:1元/min,即0.016元/s,
+        M:0.5元/min,即0.008元/s,
+        L:0.3333元/min,即0.005元/s,
         mode=1,制热
         mode=2,制冷
         :return:
@@ -85,13 +86,13 @@ class ServingQueue(models.Model):
             for room in self.room_list:
                 if room.fan_speed == 1:
                     room.fee += 0.016
-                    room.current_temp += 0.03
+                    room.current_temp += 0.016
                 elif room.fan_speed == 2:
                     room.fee += 0.008
-                    room.current_temp += 0.025
+                    room.current_temp += 0.008
                 else:
                     room.fee += 0.005
-                    room.current_temp += 0.016
+                    room.current_temp += 0.005
             timer = threading.Timer(1, self.auto_fee_temp, [1])  # 每1秒执行一次函数
             timer.start()
         else:
@@ -637,7 +638,7 @@ class Server(models.Model):
         self.state = 2  # 状态为FREE
         return self.fee
 
-    def set_serve_time(self):
+    def set_erve_time(self):
         """
         修改服务时长
         :return:
@@ -743,20 +744,42 @@ class StatisticController(models.Model):
         """
         detail = []
         rdr = Room.objects.filter(room_id=room_id, request_time__range=(begin_date, end_date)).order_by('-request_time')
+        last_record = rdr.last()  # 取最早的一条
+        first_record = rdr.first()  # 取最新的一条
         for r in rdr:
             dic = {}
             dic.update(request_id=r.request_id,
                        request_time=r.request_time,
                        room_id=r.room_id,
-                       operation=r.operation,
-                       current_temp=r.current_temp,
-                       target_temp=r.target_temp,
+                       operation_type=r.operation,
+                       current_temperation=r.current_temp,
+                       target_temperation=r.target_temp,
                        fan_speed=r.fan_speed,
-                       fee=r.fee)
+                       air_fee=r.fee,
+                       fee_rate = "1元/度",
+                       total_server_time='')
             detail.append(dic)
+        
+        # 计算总服务器时间并更新最后一条记录
+        if last_record and first_record:  # 确保记录存在
+            # 确保总时长不为负，并保留一位小数
+            total_server_time1 = abs((last_record.request_time - first_record.request_time).total_seconds())
+            total_server_time1 = round(total_server_time1, 1)
+            detail[0]['total_server_time'] = str(total_server_time1)  # 用键值对方式更新字典
 
-        for d in detail:
-            print(d)
+        # 根据 operation 字段映射操作名称
+        operation_mapping = {1: '调温', 2: '调风', 3: '开机', 4: '关机'}
+        for item in detail:
+            if item['operation_type'] in operation_mapping:
+                item['operation_type'] = operation_mapping[item['operation_type']]
+        
+        # 根据 fan_speed 字段映射操作名称
+        fan_mapping = {1: '高速', 2: '中速', 3: '低速'}
+        for item in detail:
+            if item['fan_speed'] in fan_mapping:
+                item['fan_speed'] = fan_mapping[item['fan_speed']]
+            #for d in detail:
+            #    print(d)
         return detail
 
     @staticmethod
@@ -774,11 +797,13 @@ class StatisticController(models.Model):
         file_header = ["request_id",
                        "request_time",
                        "room_id",
-                       "operation",
-                       "current_temp",
-                       "target_temp",
+                       "operation_type",
+                       "current_temperation",
+                       "target_temperation",
                        "fan_speed",
-                       "fee"]
+                       "air_fee",
+                       "fee_rate",
+                       "total_server_time"]
 
         # 写入数据
         with open("./result/detailed_list.csv", "w")as csvFile:
@@ -791,6 +816,7 @@ class StatisticController(models.Model):
             csvFile.close()
             return True
 
+    from datetime import datetime
     @staticmethod
     def create_bill(room_id, begin_date, end_date):
         """
@@ -803,8 +829,21 @@ class StatisticController(models.Model):
         bill = Room.objects.filter(room_id=room_id, request_time__range=(begin_date, end_date)) \
             .order_by('-request_time')[0]
         print("fee=%f" % bill.fee)
+        
+        room_fee_mapping = {1: 100, 2: 125, 3: 150, 4:200, 5:100}
+        
+        room_fee = room_fee_mapping.get(room_id, 0)
+        # room_fee = room_fee_mapping.get(room_id, 0) + end_date和begin_date转成日期类型，然后
+        # 计算时间差（天数）
+        end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+        begin_date = datetime.strptime(begin_date, "%Y-%m-%d").date()
+        date_diff = abs((end_date - begin_date).days)  # .days 返回天数的整数部分
+        room_fee = room_fee * date_diff
+        # 计算总费用
+        add_fee = room_fee + bill.fee
+        
 
-        return bill.fee
+        return bill.fee, room_fee, add_fee
 
     @staticmethod
     def print_bill(room_id, begin_date, end_date):
@@ -815,13 +854,15 @@ class StatisticController(models.Model):
         :param end_date: endDay
         :return:返回房间的账单费用
         """
-        fee = StatisticController.create_bill(room_id, begin_date, end_date)
+        room_id = int(room_id)
+        air_fee, room_fee, add_fee = StatisticController.create_bill(room_id, begin_date, end_date)
 
+            
         with open('./result/bill.csv', 'w') as csv_file:
             writer = csv.writer(csv_file)
-            writer.writerow(["room_id", "fee"])
-            writer.writerow([room_id, fee])
-        return fee
+            writer.writerow(["room_id", "air_fee","room_fee","add_fee"])
+            writer.writerow([room_id, air_fee, room_fee, add_fee])
+        return air_fee
 
     @staticmethod
     def create_report(room_id, type_report, year=-1, month=-1, week=-1):
@@ -861,7 +902,7 @@ class StatisticController(models.Model):
         # 开关次数
         switch_times = operations.filter(Q(operation=3) | Q(operation=4)).count()
         report.update(switch_times=switch_times)
-        # 详单条数
+        # 操作次数
         detailed_num = len(operations)
         report.update(detailed_num=detailed_num)
         # 调温次数
