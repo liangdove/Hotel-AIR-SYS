@@ -14,10 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from django.conf.urls import url
+from django.urls import path, re_path
 from Air_Condition.views import *
-
+# 对应的网页及操作
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', tst),
@@ -26,9 +25,9 @@ urlpatterns = [
 
     # 测试
     path('get/', get),
-    url(r'der-post$', post),
+    re_path(r'der-post$', post),
 
-    # 客户端按钮
+    # 客户端按钮(操作)
     path('power/', power),
     path('high/', change_high),
     path('mid/', change_mid),
