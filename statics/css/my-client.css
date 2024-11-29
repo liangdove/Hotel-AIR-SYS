@@ -1,139 +1,207 @@
-	body{
-		font-family:Microsoft YaHei;
-		background-color:#EEF5F9;
-	}
-	h2{
-		color:white;
-		font-weight:bold;
-	}
-	button{
-		width:80px;
-	    height:50px;
-	    margin:0px 0px 10px 0px;
-	}
+/* 导入所用的颜色 */
+:root {
+    --color-1: #ffffff;  /* 主色 */
+    --color-2: #262733;  /* 字体颜色 */
+    --color-3: #1b1c1c;  /* 按钮背景颜色 */
+    --color-4: #60d4b9;  /* 按钮颜色 */
+    --color-5: #e2fcff;  /* 背景色 */
+    --color-6: #648f9c;  /* 屏幕背景色 */
+    --color-7: #292530;  /* 标题字体颜色 */
+    --color-8: #1b2935;  /* 辅助文本颜色 */
+    --color-9: #aaaaa8;  /* 浅灰色背景 */	
+}
+/* 容器和表格样式 */
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--color-5); /* 浅色背景 */
+}
 
-	
-	#container{		/*容器*/
-		display:flex;
-		flex-wrap:wrap;
-		justify-content: center;
-		align-items:center;
-		padding:30px;
-	}
-	#table{		/*面板*/
-		background-color:#fff;
-		height: 500px;
-		width: 500px;
-		border:2px solid #778899;
-		border-radius:10px;
-	}
-	#head{		/*头部*/
-		width: 504px;
-		height:80px;
-		background-color: silver;
-		border:solid 2px #778899;
-		border-radius:10px 10px 0px 0px;
-		justify-content: center;
-		text-align:center;
-		box-shadow:-5px -5px 15px rgba(0,0,0,0.3) inset;
-	}
-	#screen{		/*显示屏*/
-		width: 350px;
-		height:300px;
-		margin: 12px;
-		background-color:#528B8B;
-		padding: 8px;
-		box-shadow:5px 5px 10px rgba(0,0,0,0.2) inset;
-		border:1px solid #778899;
-	}
-	.screen{
-	    width: 300px;
-		//height:300px;
-		margin: 12px;
-		background-color:#97FFFF;
-		padding: 12px;
-		box-shadow:5px 5px 10px rgba(0,0,0,0.2) inset;
-		border:1px solid #778899;
-	}
-	#time{
-		height: 50px;
-	}
-	#temperature_box{
+#table {
+    border-radius: 12px;
+    background-color: var(--color-6); /* 浅色背景 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px; /* 增大整体布局 */
+    
+    max-width: 1000px; /* 最大宽度 */
+    margin: 0 auto; /* 确保居中 */
+    padding-left: 100px; /* 增加左侧内边距，确保内容不贴边 */
+    padding-right: 40px; /* 增加右侧内边距，确保内容不贴边 */
+	padding-bottom: 40px;
+}
 
-		height:150px;
-		text-align:center;
-	}
-	#info_box{
 
-	}
-	#const_set{
-		width: 140px;
-		height:190px;
-		text-align: right;
-		}
-	#temperature{
-		width: 185px;
-		height:190px;
-		font-size: 80px;
-		}
-	#outdoor_tmp{/*室外温度*/
+/* 标题样式 */
+#head h2 {
+    text-align: center;
+    color: var(--color-7); /* 统一标题颜色 */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    font-size: 32px; /* 增大标题字体 */
+}
 
-		}
-	#indoor_tmp{
-		}
-	#wind_speed{
+/* 屏幕显示区域 */
+#screen {
+    border-radius: 10px;
+    background-color: var(--color-6);
+    padding: 30px; /* 增加内边距 */
+    background-color: var(--color-9); /* 浅灰色背景 */
+}
 
-		}
-	#mode{
+#time {
+    font-size: 18px;
+    color: var(--color-8); /* 深色字体 */
+    margin-bottom: 15px;
+}
 
-	}
-	#fee{
+#temperature_box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
-		}
-	
-	#wind_control{ /*空调控制 五个按钮*/
-		width: 80px;
-		padding:0px;
+#const_set {
+    color: var(--color-3);
+    font-weight: bold;
+}
 
-		}
-	#main_control{/*常用控制 三个按钮*/
-		width:500px;
-		padding:10px;
-	}
+#temperature {
+    font-size: 32px;
+    color: var(--color-2); /* 使用更鲜明的颜色 */
+}
+/* 信息框样式 */
+#info_box td {
+    padding: 10px;
+    text-align: center;
+    color: var(--color-8); /* 辅助文本颜色 */
+    font-size: 18px; /* 设置统一字体大小 */
+}
 
-	#btn_high{
-	    width:80px;
-	    height:50px;
-	    margin:0px 0px 10px 0px;
-		background-color:yellow;
-	}
-	#btn_mid{
-		width:80px;
-	    height:50px;
-	    margin:0px 0px 10px 0px;
-		background-color:#7FFF00;
-	}
-	#btn_low{
-		width:80px;
-	    height:50px;
-	    margin:0px 0px 10px 0px;
-		background-color:#00BFFF;
-	}
-	#btn_mode{
-		width:80px;
-	    height:50px;
-	    margin:0px 0px 10px 0px;
-	}
-	#btn_down,#btn_up{
-		margin:0px 8px;
-		font-size: 40px;
-		width:170px;
-	}
-	#btn_power{
-		margin:0px 0px 0px 30px;
-		width: 40px;
-		height:40px;
-		border-radius:20px; 
-		background: url("img/开关.png") no-repeat;
-		background-size:cover;
-	}
+#info_box p {
+    margin: 0;
+    font-size: 18px; /* 统一字体大小 */
+}
+
+#indoor_tmp, #fee, #room_id, #outdoor_tmp, #wind_speed, #mode_name {
+    font-size: 18px; /* 统一字体大小 */
+    color: var(--color-2); /* 使用相同的字体颜色 */
+    font-weight: normal; /* 统一字体粗细 */
+}
+
+/* 按钮样式 */
+#wind_control form,
+#wind_control button {
+    margin-bottom: 15px;
+}
+
+#wind_control input[type="submit"],
+#wind_control button {
+    border-radius: 12px;
+    padding: 12px 18px;
+    border: none;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+#wind_control input[type="submit"] {
+    background-color: var(--color-4);
+    color: white;
+}
+
+#wind_control input[type="submit"]:hover {
+    background-color: var(--color-3);
+}
+
+#wind_control input[type="submit"]:active {
+    transform: scale(0.95);
+}
+
+#wind_control button {
+    background-color: var(--color-2);
+    color: white;
+}
+
+#wind_control button:hover {
+    background-color: var(--color-3);
+}
+
+#wind_control button:active {
+    transform: scale(0.95);
+}
+
+/* 额外的“模式”和“保留”按钮 */
+#btn_mode, #btn_save {
+    border-radius: 12px;
+    padding: 12px 18px;
+    border: none;
+    font-size: 18px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    background-color: var(--color-4); /* 和其他按钮一致 */
+    color: white;
+}
+
+#btn_mode:hover, #btn_save:hover {
+    background-color: var(--color-2);
+}
+
+#btn_mode:active, #btn_save:active {
+    transform: scale(0.95);
+}
+
+/* 温度调节按钮 */
+form input[type="submit"] {
+    background-color: var(--color-4);
+    color: white;
+    font-size: 24px; /* 增大按钮字体 */
+    width: 80px; /* 增大按钮宽度 */
+    height: 50px; /* 增大按钮高度 */
+    border-radius: 12px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: var(--color-3);
+}
+
+form input[type="submit"]:active {
+    transform: scale(0.95);
+}
+
+/* 电源按钮 */
+#btn_power {
+    background-image: url('img\开关.png'); /* 替换为实际的电源图标路径 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 80px;
+    border: none;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+#btn_power:hover {
+    background-color: var(--color-3);
+}
+
+#btn_power:active {
+    transform: scale(0.95);
+}
+
+/* 按钮统一圆角效果 */
+input, button {
+    border-radius: 12px;
+}
+
+/* 统一按钮的悬停效果 */
+input:hover, button:hover {
+    background-color: var(--color-1);
+}
+
+input:active, button:active {
+    transform: scale(0.95);
+}
