@@ -1,12 +1,12 @@
 :root {
-    --color-1: #ffffff;  /* 主色 */
-    --color-2: #262733;  /* 字体颜色 */
+    --color-1: #ffffff;  /* 主色：背景色 */
+    --color-2: #6b6b6b;  /* 字体颜色 */
     --color-3: #1b1c1c;  /* 按钮背景颜色 */
-    --color-4: #60d4b9;  /* 按钮颜色 */
-    --color-5: #e2fcff;  /* 背景色 */
-    --color-6: #648f9c;  /* 屏幕背景色 */
+    --color-4: #845937;  /* 按钮颜色 */
+    --color-5: #F8F8F8;  /* 背景色 */
+    --color-6: #CCB9AA;  /* 屏幕背景色 */
     --color-7: #292530;  /* 标题字体颜色 */
-    --color-8: #1b2935;  /* 辅助文本颜色 */
+    --color-8: #DFDCD5;  /* 辅助文本颜色 */
     --color-9: #aaaaa8;  /* 浅灰色背景 */
 }
 
@@ -29,7 +29,7 @@ body {
 
 /* 主导航栏 */
 .header {
-    background-color: var(--color-3);
+    background-color: var(--color-2);
     padding: 10px;
     border-radius: 10px;
 }
@@ -39,21 +39,25 @@ body {
     text-align: center;
     font-size: 24px;
 }
-
 /* 侧边导航栏 */
 .side-navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: var(--color-6);
     padding: 20px;
     width: 250px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-    border-right: none; 
+    border-right: none;
 }
 
+/* 侧边栏头部 */
 .sidebar-header {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .sidebar-header .avatar {
@@ -66,38 +70,49 @@ body {
 
 .sidebar-header .title h4 {
     color: var(--color-7);
-}
-
-.sidebar-header .title h4 {
     font-size: 18px;
+    margin: 0;
 }
 
+/* 侧边栏列表 */
 .side-navbar ul {
     list-style: none;
     padding-left: 0;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.side-navbar ul li {
-    margin-bottom: 10px;
-}
-
-.side-navbar ul li a {
+.side-navbar ul li, .side-navbar ul li a {
+    background-color: var(--color-4);
     color: var(--color-1);
-    text-decoration: none;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    max-width: 180px; /* 限制按钮的最大宽度 */
+    border-radius: 10px;
+    cursor: pointer;
     font-size: 16px;
-    display: flex;
-    align-items: center;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-bottom: 10px; /* 为每个项之间添加间距 */
 }
 
-.side-navbar ul li a:hover {
-    color: var(--color-4);
+.side-navbar ul li:hover, .side-navbar ul li a:hover {
+    background-color: var(--color-5);  /* 改为稍微不同的颜色 */
+    transform: scale(1.05);
+}
+
+.side-navbar ul li:focus, .side-navbar ul li a:focus {
+    outline: none;
+    border-color: var(--color-4);
 }
 
 /* 按钮组 */
 .button-group {
-    margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
 }
 
 .button-group .btn {
@@ -106,6 +121,7 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
+    width: 48%; /* 给按钮留出一定空间 */
 }
 
 .button-group .btn-blue {
@@ -115,7 +131,7 @@ body {
 }
 
 .button-group .btn-blue:hover {
-    background-color: #48c6b8;
+    background-color: var(--color-5);
     transform: scale(1.05);
 }
 
@@ -181,7 +197,7 @@ input.form-control, select.form-control {
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: var(--color-5);
-    color: var(--color-8);
+    color: var(--color-3);
     box-sizing: border-box;  /* 包括内边距和边框在内的宽度计算 */
 }
 
@@ -194,7 +210,7 @@ input.form-control:focus, select.form-control:focus {
 /* 输入框提示文本 */
 small.form-text {
     font-size: 14px;
-    color: var(--color-8);
+    color: var(--color-3);
 }
 
 /* 浅灰色背景 */

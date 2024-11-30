@@ -11,7 +11,11 @@
     <title>Reception</title>
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="/static/css/reception.css">
-
+    <style>
+        body {
+            background-color:#DCDDDF6B;
+        }
+    </style>
 </head>
 
 <body>
@@ -38,14 +42,10 @@
                     <li> <a href="/monitor"><i class="icon-home"></i>空调管理员</a></li>
                     <li> <a href="/manager"> <i class="fa fa-bar-chart"></i>经理</a></li>
                 </ul>
-                <span class="heading">Extras</span>
-                <ul class="list-unstyled">
-                    <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
-                </ul>
 
                 <!-- 生成和打印按钮 -->
                 <div class="button-group">
-                    <button id="generateBtn" type="button" class="btn btn-general btn-white mr-2">生成</button>
+
                     <button id="printBtn" type="button" class="btn btn-general btn-blue mr-2">打印</button>
                 </div>
             </nav>
@@ -91,9 +91,7 @@
     </div>
 
     <script>
-        // JavaScript 代码：绑定生成和打印按钮的点击事件
         document.getElementById('generateBtn').addEventListener('click', function () {
-            // 执行生成操作（如果有特殊操作可在此添加）
             alert('生成操作已执行');
         });
 

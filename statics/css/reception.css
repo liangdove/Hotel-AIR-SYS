@@ -1,14 +1,14 @@
 /* 导入所用颜色 */
 :root {
-    --color-1: #ffffff;  
-    --color-2: #0000001a;  
-    --color-3: #1b1c1c;  
-    --color-4: #60d4b9;  
-    --color-5: #e2fcff;  
-    --color-6: #648f9c;  
-    --color-7: #292530;  
-    --color-8: #aaaaa83b;  
-    --color-9: #aaaaa8;  
+    --color-1: #ffffff;  /* 主色：背景色 */
+    --color-2: #6b6b6b;  /* 字体颜色 */
+    --color-3: #1b1c1c;  /* 按钮背景颜色 */
+    --color-4: #845937;  /* 按钮颜色 */
+    --color-5: #F8F8F8;  /* 背景色 */
+    --color-6: #CCB9AA;  /* 屏幕背景色 */
+    --color-7: #292530;  /* 标题字体颜色 */
+    --color-8: #DFDCD5;  /* 辅助文本颜色 */
+    --color-9: #aaaaa8;  /* 浅灰色背景 */ 
     --color-10: #f1f1f1;
 }
 
@@ -31,7 +31,7 @@ body {
 
 /* 主导航栏 */
 .header {
-    background-color: var(--color-3);
+    background-color: var(--color-2);
     padding: 10px;
     border-radius: 10px;
 }
@@ -41,9 +41,11 @@ body {
     text-align: center;
     font-size: 24px;
 }
-
 /* 侧边导航栏 */
 .side-navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: var(--color-6);
     padding: 20px;
     width: 250px;
@@ -52,10 +54,12 @@ body {
     border-right: none;
 }
 
+/* 侧边栏头部 */
 .sidebar-header {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .sidebar-header .avatar {
@@ -69,28 +73,59 @@ body {
 .sidebar-header .title h4 {
     color: var(--color-7);
     font-size: 18px;
+    margin: 0;
 }
 
+/* 侧边栏列表 */
 .side-navbar ul {
     list-style: none;
     padding-left: 0;
-}
-
-.side-navbar ul li {
-    margin-bottom: 10px;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .side-navbar ul li a {
+    background-color: var(--color-4);
     color: var(--color-1);
     text-decoration: none;
     font-size: 16px;
+    
     display: flex;
     align-items: center;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.6s, transform 0.6s;
+    margin-bottom: 10px; /* 为每个项之间添加间距 */
 }
 
 .side-navbar ul li a:hover {
+    background-color: var(--color-1);  /* 改为稍微不同的颜色 */
     color: var(--color-4);
+    transform: scale(1.05);
 }
+
+/* 按钮组 */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.button-group .btn-blue{
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;
+}
+.button-group .btn-blue:hover {
+    background-color: var(--color-6);
+    transform: scale(1.05);
+}
+
 
 /* 右侧内容区 */
 .page-content {
@@ -162,42 +197,6 @@ input.form-control:focus, select.form-control:focus {
     outline: none;
 }
 
-/* 按钮组 */
-.button-group {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.button-group .btn {
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.button-group .btn-blue {
-    background-color: var(--color-4);
-    color: var(--color-1);
-    border: none;
-}
-
-.button-group .btn-blue:hover {
-    background-color: var(--color-4);
-    transform: scale(1.05);
-}
-
-.button-group .btn-white {
-    background-color: var(--color-1);
-    color: var(--color-3);
-    border: 1px solid var(--color-4);
-}
-
-.button-group .btn-white:hover {
-    background-color: var(--color-10);
-    transform: scale(1.05);
-}
 
 /* 表单提示文本 */
 small.form-text {

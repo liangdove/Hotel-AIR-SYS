@@ -1,13 +1,13 @@
 /* 导入所用颜色 */
 :root {
     --color-1: #ffffff;  /* 主色：背景色 */
-    --color-2: #262733;  /* 字体颜色 */
+    --color-2: #6b6b6b;  /* 字体颜色 */
     --color-3: #1b1c1c;  /* 按钮背景颜色 */
-    --color-4: #60d4b9;  /* 按钮颜色 */
-    --color-5: #e2fcff;  /* 背景色 */
-    --color-6: #648f9c;  /* 屏幕背景色 */
+    --color-4: #845937;  /* 按钮颜色 */
+    --color-5: #F8F8F8;  /* 背景色 */
+    --color-6: #CCB9AA;  /* 屏幕背景色 */
     --color-7: #292530;  /* 标题字体颜色 */
-    --color-8: #aaaaa83b;  /* 表单背景颜色 */
+    --color-8: #DFDCD5;  /* 辅助文本颜色 */
     --color-9: #aaaaa8;  /* 浅灰色背景 */
 }
 
@@ -30,7 +30,7 @@ body {
 
 /* 主导航栏 */
 .header {
-    background-color: var(--color-3);
+    background-color: var(--color-2);
     padding: 10px;
     border-radius: 10px;
 }
@@ -67,7 +67,104 @@ body {
 
 .sidebar-header .title h4 {
     color: var(--color-7);
-    font-size: 18px;
+    font-size: 18px;/* 侧边导航栏 */
+    .side-navbar {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--color-6);
+        padding: 20px;
+        width: 250px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-right: none; 
+        justify-content: flex-start;
+    }
+    
+    /* 侧边栏标题区域 */
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .sidebar-header .avatar {
+        background-color: var(--color-4);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    
+    .sidebar-header .title h4 {
+        color: var(--color-7);
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    /* 侧边栏导航列表 */
+    .side-navbar ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+    
+    .side-navbar ul li {
+        margin-bottom: 15px;
+    }
+    
+    /* 导航链接样式 */
+    .side-navbar ul li a {
+        color: var(--color-1);
+        text-decoration: none;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 8px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    
+    /* 悬停效果 */
+    .side-navbar ul li a:hover {
+        background-color: var(--color-4);
+        color: var(--color-1);
+    }
+    
+    /* 如果是激活状态，可以增加样式 */
+    .side-navbar ul li a.active {
+        background-color: var(--color-4);
+        color: var(--color-1);
+        font-weight: bold;
+    }
+    
+    /* 侧边栏按钮 */
+    .side-navbar button {
+        display: block;
+        margin: 10px auto;
+        background-color: var(--color-4);
+        color: var(--color-1);
+        border: none;
+        padding: 10px;
+        width: 100%;
+        max-width: 180px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    /* 按钮悬停效果 */
+    .side-navbar button:hover {
+        background-color: var(--color-5);
+        transform: scale(1.05);
+    }
+    
+    /* 侧边栏按钮的焦点样式 */
+    .side-navbar button:focus {
+        outline: none;
+        border-color: var(--color-4);
+    }
+    
 }
 
 .side-navbar ul {
