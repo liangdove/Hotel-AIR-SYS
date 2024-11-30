@@ -7,7 +7,7 @@
     --color-5: #e2fcff;  /* 背景色 */
     --color-6: #648f9c;  /* 屏幕背景色 */
     --color-7: #292530;  /* 标题字体颜色 */
-    --color-8: #aaaaa83b;  /* 表单背景颜色 */
+    --color-8: #aaaaa83b;  /* 辅助文本颜色 */
     --color-9: #aaaaa8;  /* 浅灰色背景 */
 }
 
@@ -101,26 +101,16 @@ body {
 /* 内容区 */
 .content-inner {
     flex-grow: 1;
-    background-color: var(--color-9);  /* 使用 color-9 背景色 */
+    background-color: var(--color-9);
     padding: 20px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-left: none; 
 }
-
-/* 表单容器 */
-.form-cont {
-    background-color: var(--color-9);  /* 使用 color-9 背景色 */
-    padding: 20px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-left: none; 
-}
-
 
 /* 表单卡片 */
 .card {
-    background-color: var(--color-9);
+    background-color: var(--color-8);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -132,36 +122,35 @@ body {
     margin-bottom: 20px;
 }
 
-/* 表格 */
-.table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: separate;
-    border-spacing: 0 15px;
+/* 表单控件 */
+.form-group {
+    margin-bottom: 20px;
 }
 
-.table th, .table td {
-    padding: 15px;
-    text-align: left;
-    background-color: var(--color-8);
-    border-radius: 10px;
-}
-
-/* 屏幕样式 */
-.screen {
-    background-color: var(--color-6);
-    border-radius: 10px;
-    padding: 15px;
-}
-
-.screen h5 {
+/* 标签样式 */
+label {
+    font-size: 16px;
     color: var(--color-7);
-    font-size: 18px;
+    display: block;
+    margin-bottom: 5px;
 }
 
-.screen p {
+/* 输入框和下拉框 */
+input.form-control, select.form-control {
+    width: 100%;  /* 使用100%宽度 */
+    max-width: 90%;  /* 设置最大宽度，防止右边贴边 */
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: var(--color-5);
     color: var(--color-2);
-    font-size: 14px;
+    box-sizing: border-box;  /* 包括内边距和边框在内的宽度计算 */
+}
+
+/* 聚焦时的效果 */
+input.form-control:focus, select.form-control:focus {
+    border-color: var(--color-4);
+    outline: none;
 }
 
 /* 按钮组 */
@@ -201,40 +190,7 @@ body {
     transform: scale(1.05);
 }
 
-/* 自定义图片按钮（如开关、调高、调低） */
-.switch-button, .increase-button, .decrease-button {
-    width: 40px;
-    height: 40px;
-    background-size: cover;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* 按钮点击和悬停效果 */
-.switch-button:hover, .increase-button:hover, .decrease-button:hover {
-    transform: scale(1.1);
-}
-
-.switch-button:active, .increase-button:active, .decrease-button:active {
-    transform: scale(0.95);
-}
-
-/* 图片路径 */
-.switch-button {
-    background-image: url('img/switch.png');
-}
-
-.increase-button {
-    background-image: url('img/increase.png');
-}
-
-.decrease-button {
-    background-image: url('img/decrease.png');
-}
-
-/* 响应式布局 */
+/* 响应式设计 */
 @media screen and (max-width: 768px) {
     .outer-container {
         width: 100%;

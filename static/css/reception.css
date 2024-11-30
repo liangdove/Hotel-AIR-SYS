@@ -1,14 +1,15 @@
 /* 导入所用颜色 */
 :root {
-    --color-1: #ffffff;  /* 主色：背景色 */
-    --color-2: #262733;  /* 字体颜色 */
-    --color-3: #1b1c1c;  /* 按钮背景颜色 */
-    --color-4: #60d4b9;  /* 按钮颜色 */
-    --color-5: #e2fcff;  /* 背景色 */
-    --color-6: #648f9c;  /* 屏幕背景色 */
-    --color-7: #292530;  /* 标题字体颜色 */
-    --color-8: #aaaaa83b;  /* 表单背景颜色 */
-    --color-9: #aaaaa8;  /* 浅灰色背景 */
+    --color-1: #ffffff;  
+    --color-2: #0000001a;  
+    --color-3: #1b1c1c;  
+    --color-4: #60d4b9;  
+    --color-5: #e2fcff;  
+    --color-6: #648f9c;  
+    --color-7: #292530;  
+    --color-8: #aaaaa83b;  
+    --color-9: #aaaaa8;  
+    --color-10: #f1f1f1;
 }
 
 /* 页面整体布局 */
@@ -48,7 +49,7 @@ body {
     width: 250px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-    border-right: none; 
+    border-right: none;
 }
 
 .sidebar-header {
@@ -91,17 +92,17 @@ body {
     color: var(--color-4);
 }
 
-/* 页面内容部分 */
+/* 右侧内容区 */
 .page-content {
     display: flex;
     flex-grow: 1;
     padding: 20px;
 }
 
-/* 内容区 */
+/* 右侧内容区内部 */
 .content-inner {
     flex-grow: 1;
-    background-color: var(--color-9);  /* 使用 color-9 背景色 */
+    background-color: var(--color-9);
     padding: 20px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -117,13 +118,12 @@ body {
     border-left: none; 
 }
 
-
 /* 表单卡片 */
 .card {
-    background-color: var(--color-9);
+    background-color: var(--color-8);
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--color-2);
 }
 
 .card-header h5 {
@@ -132,36 +132,34 @@ body {
     margin-bottom: 20px;
 }
 
-/* 表格 */
-.table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: separate;
-    border-spacing: 0 15px;
+/* 表单控件 */
+.form-group {
+    margin-bottom: 20px;
 }
 
-.table th, .table td {
-    padding: 15px;
-    text-align: left;
-    background-color: var(--color-8);
-    border-radius: 10px;
-}
-
-/* 屏幕样式 */
-.screen {
-    background-color: var(--color-6);
-    border-radius: 10px;
-    padding: 15px;
-}
-
-.screen h5 {
+label {
+    font-size: 16px;
     color: var(--color-7);
-    font-size: 18px;
+    display: block;
+    margin-bottom: 5px;
 }
 
-.screen p {
-    color: var(--color-2);
-    font-size: 14px;
+/* 输入框和下拉框 */
+input.form-control, select.form-control {
+    width: 100%;
+    max-width: 90%;  /* 设置最大宽度，防止右边贴边 */
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: var(--color-5);
+    color: var(--color-8);
+    box-sizing: border-box;
+}
+
+/* 聚焦时的效果 */
+input.form-control:focus, select.form-control:focus {
+    border-color: var(--color-4);
+    outline: none;
 }
 
 /* 按钮组 */
@@ -186,7 +184,7 @@ body {
 }
 
 .button-group .btn-blue:hover {
-    background-color: #48c6b8;
+    background-color: var(--color-4);
     transform: scale(1.05);
 }
 
@@ -197,41 +195,14 @@ body {
 }
 
 .button-group .btn-white:hover {
-    background-color: #f1f1f1;
+    background-color: var(--color-10);
     transform: scale(1.05);
 }
 
-/* 自定义图片按钮（如开关、调高、调低） */
-.switch-button, .increase-button, .decrease-button {
-    width: 40px;
-    height: 40px;
-    background-size: cover;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* 按钮点击和悬停效果 */
-.switch-button:hover, .increase-button:hover, .decrease-button:hover {
-    transform: scale(1.1);
-}
-
-.switch-button:active, .increase-button:active, .decrease-button:active {
-    transform: scale(0.95);
-}
-
-/* 图片路径 */
-.switch-button {
-    background-image: url('img/switch.png');
-}
-
-.increase-button {
-    background-image: url('img/increase.png');
-}
-
-.decrease-button {
-    background-image: url('img/decrease.png');
+/* 表单提示文本 */
+small.form-text {
+    font-size: 14px;
+    color: var(--color-8);
 }
 
 /* 响应式布局 */

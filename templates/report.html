@@ -8,226 +8,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
 
-    <title>Manager</title>
+    <title>manager</title>
     <link rel="shortcut icon" href="img/favicon.ico">
-
-    <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Custom styles -->
-    <style>
-        :root {
-            --primary-color: #4caf50; /* 主色调，绿色 */
-            --secondary-color: #343a40; /* 次色调，深灰色 */
-            --background-color: #f8f9fa; /* 背景色，浅灰色 */
-            --text-color: #fff; /* 文本颜色，白色 */
-            --border-color: #ddd; /* 边框颜色，浅灰色 */
-            --hover-color: #4caf50; /* 悬停颜色，绿色 */
-            --accent-color: #f9f9f9; /* 强调色，浅灰色 */
-        }
-        
-        body {
-            font-family: 'Microsoft YaHei', sans-serif; /* 设置字体 */
-            background: 
-                radial-gradient(circle, var(--background-color) 1px, transparent 1px) 0 0 / 20px 20px, /* 背景网格图案 */
-                radial-gradient(circle, var(--background-color) 1px, transparent 1px) 10px 10px / 20px 20px; /* 背景网格图案 */
-            background-color: var(--primary-color); /* 背景颜色，绿色 */
-        }
-        
-        .header {
-            background-color: var(--primary-color); /* 头部背景颜色，绿色 */
-            padding: 10px 0; /* 内边距 */
-            border-bottom: 1px solid var(--border-color); /* 底部边框 */
-            color: var(--text-color); /* 文本颜色，白色 */
-        }
-        
-        .side-navbar {
-            width: 250px; /* 侧边导航栏宽度 */
-            background-color: var(--secondary-color); /* 背景颜色，深灰色 */
-            color: var(--text-color); /* 文本颜色，白色 */
-            padding: 20px; /* 内边距 */
-            position: fixed; /* 固定位置 */
-            top: 0; /* 顶部位置 */
-            left: 0; /* 左侧位置 */
-            height: 100%; /* 高度 */
-            display: flex; /* 弹性布局 */
-            flex-direction: column; /* 垂直排列 */
-            justify-content: center; /* 垂直居中 */
-        }
-        
-        .side-navbar ul {
-            list-style: none; /* 去除列表样式 */
-            padding: 0; /* 内边距 */
-        }
-        
-        .side-navbar ul li {
-            margin: 10px 0; /* 外边距 */
-        }
-        
-        .side-navbar ul li a {
-            color: var(--text-color); /* 文本颜色，白色 */
-            text-decoration: none; /* 去除下划线 */
-            padding: 10px; /* 内边距 */
-            display: block; /* 块级元素 */
-            border-radius: 5px; /* 边框圆角 */
-            transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
-        }
-        
-        .side-navbar ul li a:hover {
-            background-color: var(--hover-color); /* 悬停背景颜色，绿色 */
-            color: var(--text-color); /* 悬停文本颜色，白色 */
-        }
-        
-        .content-inner {
-            margin-left: 250px; /* 左侧外边距 */
-            padding: 20px; /* 内边距 */
-            display: table; /* 布局 */
-            justify-content: center; /* 水平居中 */
-            align-items: center; /* 垂直居中 */
-            height: 100vh; /* 高度 */
-        }
-        
-        .form-cont {
-            background-color: var(--accent-color); /* 背景颜色，浅灰色 */
-            padding: 45px; /* 内边距 */
-            border-radius: 15px; /* 边框圆角 */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
-            width: 90%; /* 宽度 */
-            max-width: 1100px; /* 最大宽度 */
-            margin: 0 auto; /* 居中对齐 */
-        }
-        
-        .form-group {
-            margin-bottom: 20px; /* 底部外边距 */
-        }
-        
-        .form-control {
-            border-radius: 5px; /* 边框圆角 */
-            border: 1px solid var(--border-color); /* 边框 */
-            padding: 10px; /* 内边距 */
-            width: 100%; /* 宽度 */
-        }
-        
-        .btn-general {
-            border-radius: 5px; /* 边框圆角 */
-            padding: 10px 20px; /* 内边距 */
-            cursor: pointer; /* 鼠标指针样式 */
-            transition: background-color 0.3s, color 0.3s; /* 过渡效果 */
-        }
-        
-        .btn-white {
-            background-color: var(--accent-color); /* 背景颜色，浅灰色 */
-            color: var(--secondary-color); /* 文本颜色，深灰色 */
-            border: 1px solid var(--secondary-color); /* 边框 */
-        }
-        
-        .btn-white:hover {
-            background-color: var(--secondary-color); /* 悬停背景颜色，深灰色 */
-            color: var(--accent-color); /* 悬停文本颜色，浅灰色 */
-        }
-        
-        .btn-blue {
-            background-color: var(--primary-color); /* 背景颜色，绿色 */
-            color: var(--text-color); /* 文本颜色，白色 */
-            border: 1px solid var(--primary-color); /* 边框 */
-        }
-        
-        .btn-blue:hover {
-            background-color: var(--hover-color); /* 悬停背景颜色，绿色 */
-            color: var(--text-color); /* 悬停文本颜色，白色 */
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/manager_report.css">
 </head>
 
+
 <body>
+    <!-- 外层容器，用于限制页面宽度 -->
+    <div class="outer-container">
+        <header class="header">
+            <nav class="navbar navbar-expand-lg ">
+            <h3 class='col-sm-12' style="text-align:center">经理</h3>
+            </nav>
+        </header>
+        <div class="page-content d-flex align-items-stretch">
 
-<!--====================================================
-                     MAIN NAVBAR
-======================================================-->
-    <header class="header">
-
-        <nav class="navbar navbar-expand-lg ">
-        <h3 class='col-sm-12' style="text-align:center">经理</h3>
-        </nav>
-    </header>
-
-<!--====================================================
-                    PAGE CONTENT
-======================================================-->
-    <div class="page-content d-flex align-items-stretch">
-
-        <!--***** SIDE NAVBAR *****-->
-        <nav class="side-navbar">
-            <div class="sidebar-header d-flex align-items-center">
-                <div class="avatar"></div>
-                <div class="title">
-                    <h4 class="h4">SWITCH</h4>
+            <!--***** SIDE NAVBAR *****-->
+            <nav class="side-navbar">
+                <div class="sidebar-header d-flex align-items-center">
+                    <div class="avatar"></div>
+                    <div class="title">
+                        <h4 class="h4">切换身份</h4>
+                    </div>
                 </div>
-            </div>
-            <hr>
-            <!-- Sidebar Navidation Menus-->
-            <ul class="list-unstyled">
-                <li> <a href="/monitor"><i class="icon-home"></i>空调管理员</a></li>
-                <li> <a href="/recp"> <i class="fa fa-bar-chart"></i>前台</a></li>
+                <hr>
+                <!-- Sidebar Navigation Menus-->
+                <ul class="list-unstyled">
+                    <li> <a href="/monitor"><i class="icon-home"></i>空调管理员</a></li>
+                    <li> <a href="/recp"> <i class="fa fa-bar-chart"></i>前台</a></li>
+                </ul>
+                <span class="heading">Extras</span>
+                <ul class="list-unstyled">
+                    <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
+                </ul>
 
-            </ul><span class="heading">Extras</span>
-            <ul class="list-unstyled">
-                <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
-            </ul>
-        </nav>
+                <!-- 打印按钮移到左侧边栏 -->
+                <div class="button-group">
+                    <button id="printMonthlyReport" class="btn btn-general btn-blue mr-2">打印月报表</button>
+                    <button id="printWeeklyReport" class="btn btn-general btn-blue mr-2">打印周报表</button>
+                </div>
+            </nav>
 
+            <div class="content-inner form-cont">
+                <div class="row">
+                    <div class="col-md-12">
 
-        <div class="content-inner form-cont">
-            <div class="row">
-                <div class="col-md-12">
-
-                    <!--***** BASIC FORM *****-->
-                    <div class="card form" id="form1">
-                        <div class="card-header">
-                            <h5>查看报表</h5>
-                        </div>
-                        <br>
+                        <!--***** BASIC FORM *****-->
+                        <div class="card form" id="form1">
+                            <div class="card-header">
+                                <h5>查看报表</h5>
+                            </div>
+                            <br>
 
                             <div class="row">
-								<div class="col-md-1"></div>
-
+                                <div class="col-md-1"></div>
                                 <div class="col-md-5">
-								    <form action="/manager_month" method="get">
-                                    <div class="form-group">
+                                    <form action="/manager_month" method="get" id="monthForm">
                                         <div class="form-group row">
-                                    <label style="width: 85px;" class=" col-form-label">Month</label>
-                                    <div class="col-9">
-                                        <input class="form-control" type="month" value="2020-06" name="month">
-                                    </div>
-                                    </div>
-                                    </div>
-										<input type="submit" class="btn btn-general btn-blue mr-2" value="打印月报表"></input>
-								    </form>
+                                            <label style="width: 85px;" class="col-form-label">Month</label>
+                                            <div class="col-9">
+                                                <input class="form-control" type="month" value="2024-11" name="month">
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
 
                                 <div class="col-md-5">
-								    <form action="/manager_week" method="get">
-                                    <div class="form-group row">
-                                    <label style="width: 85px;" class=" col-form-label">Week</label>
-                                    <div class="col-9">
-                                        <input class="form-control" type="week" value="2020-W24" name="week">
-                                    </div>
-                                    </div>
-										<input type="submit" class="btn btn-general btn-blue mr-2" value="打印周报表"></input>
-								</form>
+                                    <form action="/manager_week" method="get" id="weekForm">
+                                        <div class="form-group row">
+                                            <label style="width: 85px;" class="col-form-label">Week</label>
+                                            <div class="col-9">
+                                                <input class="form-control" type="week" value="2024-W48" name="week">
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-
-
                             </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        // JavaScript 代码：绑定打印按钮的点击事件来提交表单
+        document.getElementById('printMonthlyReport').addEventListener('click', function () {
+            document.getElementById('monthForm').submit();
+        });
 
+        document.getElementById('printWeeklyReport').addEventListener('click', function () {
+            document.getElementById('weekForm').submit();
+        });
+    </script>
 
 </body>
 

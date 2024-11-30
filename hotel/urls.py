@@ -20,14 +20,14 @@ from Air_Condition.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', tst),
-    path('', client_off),
-    path('on/', client_on),
+    path('', client_off), #ac
+    path('on/', client_on), #ac
 
     # 测试
     path('get/', get),
     re_path(r'der-post$', post),
 
-    # 客户端按钮(操作)
+    # 客户端按钮(操作)ac
     path('power/', power),
     path('high/', change_high),
     path('mid/', change_mid),
@@ -35,16 +35,16 @@ urlpatterns = [
     path('up/', change_up),
     path('down/', change_down),
 
-    # 空调管理员
+    # 空调管理员ac
     path('init/', init),
     path('init_submit/', init_submit),
     path('monitor/', monitor),
 
-    # 前台
+    # 前台ac
     path('recp/', reception_init),
     path('recp_submit/', reception),
 
-    # 经理
+    # 经理ac
     path('manager/', manager),
     path('manager_month/', manager_month),
     path('manager_week/', manager_week),
