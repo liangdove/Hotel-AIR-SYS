@@ -12,11 +12,15 @@
 
 /* 页面整体布局 */
 body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh; 
     font-family: Arial, sans-serif;
     background-color: var(--color-5);
-    margin: 0;
     padding: 0;
 }
+
 
 /* 容器 */
 #container {
