@@ -1,206 +1,223 @@
-/* 导入所用的颜色 */
 :root {
-    --color-1: #ffffff;  /* 主色 */
-    --color-2: #262733;  /* 字体颜色 */
+    --color-1: #ffffff;  /* 主色：背景色 */
+    --color-2: #6b6b6b;  /* 字体颜色 */
     --color-3: #1b1c1c;  /* 按钮背景颜色 */
-    --color-4: #60d4b9;  /* 按钮颜色 */
-    --color-5: #e2fcff;  /* 背景色 */
-    --color-6: #648f9c;  /* 屏幕背景色 */
+    --color-4: #845937;  /* 按钮颜色 */
+    --color-5: #F8F8F8;  /* 背景色 */
+    --color-6: #CCB9AA;  /* 屏幕背景色 */
     --color-7: #292530;  /* 标题字体颜色 */
-    --color-8: #1b2935;  /* 辅助文本颜色 */
-    --color-9: #aaaaa8;  /* 浅灰色背景 */	
+    --color-8: #DFDCD5;  /* 辅助文本颜色 */
+    --color-9: #aaaaa8;  /* 浅灰色背景 */
 }
-/* 容器和表格样式 */
+
+/* 页面整体布局 */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh; 
+    font-family: Arial, sans-serif;
+    background-color: var(--color-5);
+    padding: 0;
+}
+
+
+/* 容器 */
 #container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: var(--color-5); /* 浅色背景 */
+    max-width: 50%; 
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--color-5);
+    border-radius: 15px;
 }
 
-#table {
-    border-radius: 12px;
-    background-color: var(--color-6); /* 浅色背景 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 40px; /* 增大整体布局 */
-    
-    max-width: 1000px; /* 最大宽度 */
-    margin: 0 auto; /* 确保居中 */
-    padding-left: 100px; /* 增加左侧内边距，确保内容不贴边 */
-    padding-right: 40px; /* 增加右侧内边距，确保内容不贴边 */
-	padding-bottom: 40px;
-}
-
-/* 标题样式 */
-#head h2 {
-    text-align: center;
-    color: var(--color-7); /* 统一标题颜色 */
-    font-family: Arial, sans-serif;
-    margin: 0;
-    font-size: 32px; /* 增大标题字体 */
-}
-
-/* 屏幕显示区域 */
-#screen {
-    border-radius: 10px;
+/* 侧边栏 */
+#sidebar {
+    display: flex;
+    width: 250px;
     background-color: var(--color-6);
-    padding: 30px; /* 增加内边距 */
-    background-color: var(--color-9); /* 浅灰色背景 */
+    padding: 20px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-right: none; 
+    justify-content: center;
+}
+/* 侧边栏表单按钮样式 */
+#sidebar form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
+#sidebar input[type="submit"] {
+    background-color: var(--color-4);
+    color: var(--color-1);
+    border: none;
+    padding: 10px;
+    width: 100%;
+    max-width: 180px;  /* 限制按钮的最大宽度 */
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#sidebar input[type="submit"]:hover {
+    background-color: var(--color-4);
+    transform: scale(1.05);
+}
+
+#sidebar input[type="submit"]:focus {
+    outline: none;
+    border-color: var(--color-4);
+}
+
+#sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#sidebar button {
+    display: block; 
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--color-4);
+    color: var(--color-1);
+    border: none;
+    padding: 10px;
+    width: 100%;
+    max-width: 180px;  
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#sidebar button:hover {
+    background-color: var(--color-4);
+    transform: scale(1.05);
+}
+
+/* 主要内容区 */
+.content-inner {
+    flex-grow: 1;
+
+    background-color: var(--color-9);
+    padding: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: none; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content-inner h2 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--color-7);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* 时间和温度显示 */
 #time {
+    color: var(--color-3);
     font-size: 18px;
-    color: var(--color-8); /* 深色字体 */
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 #temperature_box {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 10px;
     margin-bottom: 20px;
 }
 
 #const_set {
+    font-size: 18px;
     color: var(--color-3);
-    font-weight: bold;
 }
 
 #temperature {
-    font-size: 32px;
-    color: var(--color-2); /* 使用更鲜明的颜色 */
+    font-size: 24px;
+    color: var(--color-7);
 }
-/* 信息框样式 */
+
+/* 信息表格 */
+#info_box {
+
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
 #info_box td {
-    padding: 10px;
-    text-align: center;
-    color: var(--color-8); /* 辅助文本颜色 */
-    font-size: 18px; /* 设置统一字体大小 */
+    padding: 15px;
+    text-align: left;
+    background-color: var(--color-8);
+    border-radius: 10px;
+    color: var(--color-3);
 }
 
-#info_box p {
-    margin: 0;
-    font-size: 18px; /* 统一字体大小 */
+/* 控制栏 */
+#control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+    margin-top: 20px;
 }
 
-#indoor_tmp, #fee, #room_id, #outdoor_tmp, #wind_speed, #mode_name {
-    font-size: 18px; /* 统一字体大小 */
-    color: var(--color-2); /* 使用相同的字体颜色 */
-    font-weight: normal; /* 统一字体粗细 */
-}
-
-/* 按钮样式 */
-#wind_control form,
-#wind_control button {
-    margin-bottom: 15px;
-}
-
-#wind_control input[type="submit"],
-#wind_control button {
-    border-radius: 12px;
-    padding: 12px 18px;
+/* 控制按钮 */
+#control-bar button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
     border: none;
-    font-size: 18px;
-    transition: all 0.3s ease;
+    color: var(--color-1);
 }
 
-#wind_control input[type="submit"] {
+#control-bar button:hover {
     background-color: var(--color-4);
-    color: white;
+    transform: scale(1.05);
 }
 
-#wind_control input[type="submit"]:hover {
-    background-color: var(--color-3);
-}
-
-#wind_control input[type="submit"]:active {
-    transform: scale(0.95);
-}
-
-#wind_control button {
-    background-color: var(--color-2);
-    color: white;
-}
-
-#wind_control button:hover {
-    background-color: var(--color-3);
-}
-
-#wind_control button:active {
-    transform: scale(0.95);
-}
-
-/* 额外的“模式”和“保留”按钮 */
-#btn_mode, #btn_save {
-    border-radius: 12px;
-    padding: 12px 18px;
-    border: none;
-    font-size: 18px;
-    margin-bottom: 10px;
-    transition: all 0.3s ease;
-    background-color: var(--color-4); /* 和其他按钮一致 */
-    color: white;
-}
-
-#btn_mode:hover, #btn_save:hover {
-    background-color: var(--color-2);
-}
-
-#btn_mode:active, #btn_save:active {
-    transform: scale(0.95);
-}
-
-/* 温度调节按钮 */
-form input[type="submit"] {
-    background-color: var(--color-4);
-    color: white;
-    font-size: 24px; /* 增大按钮字体 */
-    width: 80px; /* 增大按钮宽度 */
-    height: 50px; /* 增大按钮高度 */
-    border-radius: 12px;
-    border: none;
-    transition: all 0.3s ease;
-}
-
-form input[type="submit"]:hover {
-    background-color: var(--color-3);
-}
-
-form input[type="submit"]:active {
-    transform: scale(0.95);
-}
-
-/* 电源按钮 */
 #btn_power {
-    background-image: url('img\开关.png'); /* 替换为实际的电源图标路径 */
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 80px;
-    height: 80px;
-    border: none;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-#btn_power:hover {
-    background-color: var(--color-1);
-}
-
-#btn_power:active {
-    transform: scale(0.95);
-}
-
-/* 按钮统一圆角效果 */
-input, button {
-    border-radius: 12px;
-}
-
-/* 统一按钮的悬停效果 */
-input:hover, button:hover {
     background-color: var(--color-3);
 }
 
-input:active, button:active {
-    transform: scale(0.95);
+#btn_up, #btn_down {
+    background-color: var(--color-4);
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 768px) {
+    #container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .content-inner {
+        margin-left: 0;
+        padding: 10px;
+        width: 100%;
+    }
+
+    #control-bar {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
 }
