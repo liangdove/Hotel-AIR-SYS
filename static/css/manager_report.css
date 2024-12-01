@@ -1,0 +1,222 @@
+/* 导入所用颜色 */
+:root {
+    --color-1: #ffffff;  /* 主色：背景色 */
+    --color-2: #6b6b6b;  /* 字体颜色 */
+    --color-3: #1b1c1c;  /* 按钮背景颜色 */
+    --color-4: #845937;  /* 按钮颜色 */
+    --color-5: #F8F8F8;  /* 背景色 */
+    --color-6: #CCB9AA;  /* 屏幕背景色 */
+    --color-7: #292530;  /* 标题字体颜色 */
+    --color-8: #DFDCD5;  /* 辅助文本颜色 */
+    --color-9: #aaaaa8;  /* 浅灰色背景 */
+}
+
+/* 页面整体布局 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-5);
+    margin: 0;
+    padding: 0;
+}
+
+/* 外层容器 */
+.outer-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--color-5);
+    border-radius: 10px;
+}
+
+/* 主导航栏 */
+.header {
+    background-color: var(--color-2);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.navbar h3 {
+    color: var(--color-1);
+    text-align: center;
+    font-size: 24px;
+}
+/* 侧边导航栏 */
+.side-navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-6);
+    padding: 20px;
+    width: 250px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-right: none;
+}
+
+/* 侧边栏头部 */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.sidebar-header .avatar {
+    background-color: var(--color-4);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.sidebar-header .title h4 {
+    color: var(--color-7);
+    font-size: 18px;
+    margin: 0;
+}
+
+/* 侧边栏列表 */
+.side-navbar ul {
+    list-style: none;
+    padding-left: 0;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.side-navbar ul li {
+    margin-bottom: 10px;
+}
+.side-navbar ul li a {
+    background-color: var(--color-4);
+    color: var(--color-1);
+    text-decoration: none;
+    font-size: 16px;
+    
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.6s, transform 0.6s;
+    margin-bottom: 10px; /* 为每个项之间添加间距 */
+}
+
+.side-navbar ul li a:hover {
+    background-color: var(--color-1);  /* 改为稍微不同的颜色 */
+    color: var(--color-4);
+    transform: scale(1.05);
+}
+
+/* 按钮组 */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.button-group .btn, .button-group .btn-blue{
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 48%; /* 给按钮留出一定空间 */
+}
+
+
+.button-group .btn-white:hover,.button-group .btn-blue:hover {
+    background-color: var(--color-6);
+    transform: scale(1.05);
+}
+
+
+/* 页面内容部分 */
+.page-content {
+    display: flex;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* 内容区 */
+.content-inner {
+    flex-grow: 1;
+    background-color: var(--color-9);
+    padding: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: none; 
+}
+
+/* 表单卡片 */
+.card {
+    background-color: var(--color-8);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header h5 {
+    color: var(--color-7);
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* 表单控件 */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* 标签样式 */
+label {
+    font-size: 16px;
+    color: var(--color-7);
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* 输入框和下拉框 */
+input.form-control, select.form-control {
+    width: 100%;  /* 使用100%宽度 */
+    max-width: 90%;  /* 设置最大宽度，防止右边贴边 */
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: var(--color-5);
+    color: var(--color-2);
+    box-sizing: border-box;  /* 包括内边距和边框在内的宽度计算 */
+}
+
+/* 聚焦时的效果 */
+input.form-control:focus, select.form-control:focus {
+    border-color: var(--color-4);
+    outline: none;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 768px) {
+    .outer-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .side-navbar {
+        width: 200px;
+    }
+
+    .content-inner {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .card-header {
+        font-size: 18px;
+    }
+
+    .screen {
+        padding: 10px;
+    }
+
+    .table td {
+        padding: 10px;
+    }
+}

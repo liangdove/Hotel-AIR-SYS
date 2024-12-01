@@ -1,0 +1,361 @@
+/* 导入所用颜色 */
+:root {
+    --color-1: #ffffff;  /* 主色：背景色 */
+    --color-2: #6b6b6b;  /* 字体颜色 */
+    --color-3: #1b1c1c;  /* 按钮背景颜色 */
+    --color-4: #845937;  /* 按钮颜色 */
+    --color-5: #F8F8F8;  /* 背景色 */
+    --color-6: #CCB9AA;  /* 屏幕背景色 */
+    --color-7: #292530;  /* 标题字体颜色 */
+    --color-8: #DFDCD5;  /* 辅助文本颜色 */
+    --color-9: #aaaaa8;  /* 浅灰色背景 */
+}
+
+/* 页面整体布局 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-5);
+    margin: 0;
+    padding: 0;
+}
+
+/* 外层容器 */
+.outer-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--color-5);
+    border-radius: 10px;
+}
+
+/* 主导航栏 */
+.header {
+    background-color: var(--color-2);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.navbar h3 {
+    color: var(--color-1);
+    text-align: center;
+    font-size: 24px;
+}
+
+/* 侧边导航栏 */
+.side-navbar {
+    background-color: var(--color-6);
+    padding: 20px;
+    width: 250px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-right: none; 
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-header .avatar {
+    background-color: var(--color-4);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.sidebar-header .title h4 {
+    color: var(--color-7);
+    font-size: 18px;/* 侧边导航栏 */
+    .side-navbar {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--color-6);
+        padding: 20px;
+        width: 250px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-right: none; 
+        justify-content: flex-start;
+    }
+    
+    /* 侧边栏标题区域 */
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .sidebar-header .avatar {
+        background-color: var(--color-4);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    
+    .sidebar-header .title h4 {
+        color: var(--color-7);
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    /* 侧边栏导航列表 */
+    .side-navbar ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+    
+    .side-navbar ul li {
+        margin-bottom: 15px;
+    }
+    
+    /* 导航链接样式 */
+    .side-navbar ul li a {
+        color: var(--color-1);
+        text-decoration: none;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 8px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    
+    /* 悬停效果 */
+    .side-navbar ul li a:hover {
+        background-color: var(--color-4);
+        color: var(--color-1);
+    }
+    
+    /* 如果是激活状态，可以增加样式 */
+    .side-navbar ul li a.active {
+        background-color: var(--color-4);
+        color: var(--color-1);
+        font-weight: bold;
+    }
+    
+    /* 侧边栏按钮 */
+    .side-navbar button {
+        display: block;
+        margin: 10px auto;
+        background-color: var(--color-4);
+        color: var(--color-1);
+        border: none;
+        padding: 10px;
+        width: 100%;
+        max-width: 180px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    /* 按钮悬停效果 */
+    .side-navbar button:hover {
+        background-color: var(--color-5);
+        transform: scale(1.05);
+    }
+    
+    /* 侧边栏按钮的焦点样式 */
+    .side-navbar button:focus {
+        outline: none;
+        border-color: var(--color-4);
+    }
+    
+}
+
+.side-navbar ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.side-navbar ul li {
+    margin-bottom: 10px;
+}
+
+.side-navbar ul li a {
+    color: var(--color-1);
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.side-navbar ul li a:hover {
+    color: var(--color-4);
+}
+
+/* 页面内容部分 */
+.page-content {
+    display: flex;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* 内容区 */
+.content-inner {
+    flex-grow: 1;
+    background-color: var(--color-9);  /* 使用 color-9 背景色 */
+    padding: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: none; 
+}
+
+/* 表单容器 */
+.form-cont {
+    background-color: var(--color-9);  /* 使用 color-9 背景色 */
+    padding: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: none; 
+}
+
+
+/* 表单卡片 */
+.card {
+    background-color: var(--color-9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header h5 {
+    color: var(--color-7);
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* 表格 */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: left;
+    background-color: var(--color-8);
+    border-radius: 10px;
+}
+
+/* 屏幕样式 */
+.screen {
+    background-color: var(--color-6);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.screen h5 {
+    color: var(--color-7);
+    font-size: 18px;
+}
+
+.screen p {
+    color: var(--color-2);
+    font-size: 14px;
+}
+
+/* 按钮组 */
+.button-group {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-group .btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.button-group .btn-blue {
+    background-color: var(--color-4);
+    color: var(--color-1);
+    border: none;
+}
+
+.button-group .btn-blue:hover {
+    background-color: #48c6b8;
+    transform: scale(1.05);
+}
+
+.button-group .btn-white {
+    background-color: var(--color-1);
+    color: var(--color-3);
+    border: 1px solid var(--color-4);
+}
+
+.button-group .btn-white:hover {
+    background-color: #f1f1f1;
+    transform: scale(1.05);
+}
+
+/* 自定义图片按钮（如开关、调高、调低） */
+.switch-button, .increase-button, .decrease-button {
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* 按钮点击和悬停效果 */
+.switch-button:hover, .increase-button:hover, .decrease-button:hover {
+    transform: scale(1.1);
+}
+
+.switch-button:active, .increase-button:active, .decrease-button:active {
+    transform: scale(0.95);
+}
+
+/* 图片路径 */
+.switch-button {
+    background-image: url('img/switch.png');
+}
+
+.increase-button {
+    background-image: url('img/increase.png');
+}
+
+.decrease-button {
+    background-image: url('img/decrease.png');
+}
+
+/* 响应式布局 */
+@media screen and (max-width: 768px) {
+    .outer-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .side-navbar {
+        width: 200px;
+    }
+
+    .content-inner {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .card-header {
+        font-size: 18px;
+    }
+
+    .screen {
+        padding: 10px;
+    }
+
+    .table td {
+        padding: 10px;
+    }
+}

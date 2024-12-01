@@ -24,7 +24,7 @@ class ServingQueue(models.Model):
     # 注：不确定这么写好不好，我觉得serve_time应该和房间对象绑定在一起可能会好一点。
     # 如果有更好的类型，请替换。
     room_list = []
-
+    cishu=0
     serving_num = models.IntegerField(verbose_name='服务对象数', default=0)
 
     def __init__(self):
@@ -67,11 +67,24 @@ class ServingQueue(models.Model):
         self.serving_num -= 1
         return True
 
-    def update_serve_time(self):
+    def update_serve_time(self,rooms):
         if self.serving_num != 0:
             for room in self.room_list:
                 room.serve_time += 1
-        timer = threading.Timer(60, self.update_serve_time)  # 每1min执行一次函数
+        #print(rooms[0])
+        print(f"第{self.cishu}次打印：")
+        self.cishu=self.cishu+1
+        for record in range(len(rooms)):
+    
+            if rooms[record]:
+                for i in range(0,5):
+                  if rooms[record].room_id == i:
+                    
+                    print(f"队列： 房间号：{rooms[record].room_id},运行状态：{rooms[record].state}, 当前温度：{rooms[record].current_temp}, 目标温度：{rooms[record].target_temp}, 风速：{rooms[record].fan_speed}, 费用：{rooms[record].fee}")        
+        
+                  
+
+        timer = threading.Timer(60/6, lambda: self.update_serve_time(rooms))  # 每1min执行一次函数
         timer.start()
 
     def auto_fee_temp(self, mode):
@@ -95,7 +108,7 @@ class ServingQueue(models.Model):
                 else:
                     room.fee += 0.005
                     room.current_temp += 0.005
-            timer = threading.Timer(1, self.auto_fee_temp, [1])  # 每1秒执行一次函数
+            timer = threading.Timer(1/6, self.auto_fee_temp, [1])  # 每1秒执行一次函数
             timer.start()
         else:
             for room in self.room_list:
@@ -108,7 +121,7 @@ class ServingQueue(models.Model):
                 else:
                     room.fee += 0.005
                     room.current_temp -= 0.016
-            timer = threading.Timer(1, self.auto_fee_temp, [2])  # 每1秒执行一次函数
+            timer = threading.Timer(1/6, self.auto_fee_temp, [2])  # 每1秒执行一次函数
             timer.start()
 
 
@@ -117,7 +130,7 @@ class WaitingQueue(models.Model):
     等待队列，存放所有等待服务的房间对象
     """
     room_list = []
-
+    
     waiting_num = models.IntegerField(verbose_name='等待对象数', default=0)
 
     def __init__(self):
@@ -161,7 +174,15 @@ class WaitingQueue(models.Model):
         if self.waiting_num != 0:
             for room in self.room_list:
                 room.wait_time += 1
-        timer = threading.Timer(60, self.update_wait_time)  # 每1min执行一次函数
+        
+        # for record in range(len(self.room_list)):
+    
+        #     if self.room_list[record]:
+        #         for i in range(0,5):
+        #           if self.room_list[record].room_id == i:
+                    
+                    # print(f"Waiting队列： 房间号：{self.room_list[record].room_id}, 当前温度：{self.room_list[record].current_temp}, 目标温度：{self.room_list[record].target_temp}, 风速：{self.room_list[record].fan_speed}, 费用：{self.room_list[record].fee}")        
+        timer = threading.Timer(60/6, self.update_wait_time)  # 每1min执行一次函数
         timer.start()
 
 
@@ -237,7 +258,7 @@ class Scheduler(models.Model):
         #  只要有服务就检查是否有房间达到目标温度
         self.check_target_arrive()
         # 开启调度队列和等待队列的计时功能
-        self.SQ.update_serve_time()
+        self.SQ.update_serve_time(self.rooms)
         self.WQ.update_wait_time()
 
         return self.state
@@ -263,7 +284,7 @@ class Scheduler(models.Model):
         :param current_room_temp:
         :return:
         """
-        return_room = Room(request_id=self.request_id)
+        return_room = Room(request_id=self.request_id) #调用Room类，生成对象
         flag = 1
         for room in self.rooms:
             if room.room_id == room_id:  # 不是第一次开机，直接处理
@@ -377,7 +398,7 @@ class Scheduler(models.Model):
         每分钟查看一次房间状态
         :return:
         """
-        timer = threading.Timer(5, self.check_room_state)  # 每五秒执行一次check函数,list_room为参数
+        timer = threading.Timer(5/6, self.check_room_state)  # 每五秒执行一次check函数,list_room为参数
         timer.start()
         return self.rooms
 
@@ -479,7 +500,7 @@ class Scheduler(models.Model):
                         self.SQ.insert(room)
                     else:
                         self.WQ.insert(room)
-                timer = threading.Timer(1, self.back_temp, [room, 1])  # 每1秒执行一次函数
+                timer = threading.Timer(1/6, self.back_temp, [room, 1])  # 每1秒执行一次函数
                 timer.start()
             else:
                 room.current_temp += 0.008
@@ -488,7 +509,7 @@ class Scheduler(models.Model):
                         self.SQ.insert(room)
                     else:
                         self.WQ.insert(room)
-                timer = threading.Timer(1, self.back_temp, [room, 2])  # 每1秒执行一次函数
+                timer = threading.Timer(1/6, self.back_temp, [room, 2])  # 每1秒执行一次函数
                 timer.start()
 
     def check_target_arrive(self):
@@ -515,7 +536,7 @@ class Scheduler(models.Model):
                     else:
                         self.back_temp(room, 2)
 
-        timer = threading.Timer(1, self.check_target_arrive)  # 每5秒执行一次check函数
+        timer = threading.Timer(1/6, self.check_target_arrive)  # 每5秒执行一次check函数
         timer.start()
 
     def scheduling(self):
@@ -554,7 +575,7 @@ class Scheduler(models.Model):
                     self.WQ.delete_room(temp)
                     self.SQ.insert(temp)
                 i += 1
-        timer = threading.Timer(120, self.scheduling)  # 每2min执行一次调度函数
+        timer = threading.Timer(120/6, self.scheduling)  # 每2min执行一次调度函数
         timer.start()
 
 
@@ -724,7 +745,10 @@ class StatisticController(models.Model):
     - 名称：统计控制器
     - 作用：负责读数据库的控制器，为前台生成详单、账单
     """
-
+    sche=[]
+    
+    def __init__(self):
+        self.sche = Scheduler()  # 实例化 ClassB 对象
     @staticmethod
     def reception_login(id, password):
         """
@@ -819,8 +843,8 @@ class StatisticController(models.Model):
             return True
 
     from datetime import datetime
-    @staticmethod
-    def create_bill(room_id, begin_date, end_date):
+    
+    def create_bill(self, room_id, begin_date, end_date):
         """
         创建账单
         :param room_id: 房间号
@@ -828,10 +852,10 @@ class StatisticController(models.Model):
         :param end_date: endDay
         :return:
         """
-        bill = Room.objects.filter(room_id=room_id, request_time__range=(begin_date, end_date)) \
-            .order_by('-request_time')[0]
-        print("fee=%f" % bill.fee)
-        
+        bill = [room for room in self.sche.rooms if room.room_id == room_id]
+
+        #print("fee=%f" % bill.fee)
+        print("room_fee信息：",bill[0].fee)
         room_fee_mapping = {1: 100, 2: 125, 3: 150, 4:200, 5:100}
         
         room_fee = room_fee_mapping.get(room_id, 0)
@@ -842,13 +866,13 @@ class StatisticController(models.Model):
         date_diff = abs((end_date - begin_date).days)  # .days 返回天数的整数部分
         room_fee = room_fee * date_diff
         # 计算总费用
-        add_fee = room_fee + bill.fee
+        add_fee = room_fee + bill[0].fee
         
 
-        return bill.fee, room_fee, add_fee
+        return bill[0].fee, room_fee, add_fee
 
-    @staticmethod
-    def print_bill(room_id, begin_date, end_date):
+    
+    def print_bill(self,room_id, begin_date, end_date):
         """
         打印账单
         :param room_id: 房间号
@@ -857,7 +881,7 @@ class StatisticController(models.Model):
         :return:返回房间的账单费用
         """
         room_id = int(room_id)
-        air_fee, room_fee, add_fee = StatisticController.create_bill(room_id, begin_date, end_date)
+        air_fee, room_fee, add_fee = self.create_bill(room_id, begin_date, end_date)
 
             
         with open('./result/bill.csv', 'w') as csv_file:
@@ -973,10 +997,12 @@ class StatisticController(models.Model):
 
     @staticmethod
     def draw_report(room_id=-1, type_report=1, year=-1, month=-1, week=-1):
+        import matplotlib.pyplot as plt
+        import numpy as np
+        import pandas as pd
         plt.rcParams['font.sans-serif'] = ['SimHei']  # 黑体
         plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
 
-        # 如果没有输入房间号，逐个
         if room_id == -1:
             global report
             data = []
@@ -1014,8 +1040,7 @@ class StatisticController(models.Model):
             ax.set_ylabel('数值', fontsize=12)
 
             # 设置x轴的中文标签
-            # 假设原始的报告类型是英文的，可以将其替换为中文
-            x_labels = ['报告A', '报告B', '报告C', '报告D']  # 根据实际需要修改
+            x_labels = ['开关次数', '总操作次数', '调温次数', '调风次数','调度次数']  # 根据实际需要修改
             ax.set_xticks(range(len(x_labels)))  # 设置x轴的刻度位置
             ax.set_xticklabels(x_labels, fontsize=10)  # 设置x轴标签为中文
 
@@ -1026,7 +1051,62 @@ class StatisticController(models.Model):
             plt.subplots_adjust(left=0.1, right=0.9, bottom=0.2, top=0.85)
 
             # 将图表保存为高分辨率PNG文件
-            plt.savefig('./result/report_line_plot.png', dpi=300)
+            if(type_report==1):plt.savefig('./result/report_line_plot_month.png', dpi=300)
+            elif(type_report==2):plt.savefig('./result/report_line_plot_week.png', dpi=300)
+            
 
             # 显示图表（可选，仅在交互式会话中使用）
-            plt.show()
+            # plt.show()
+
+# def draw_report(room_id=-1, type_report=1, year=-1, month=-1, week=-1):
+#     import matplotlib.pyplot as plt
+#     import numpy as np
+#     import pandas as pd
+
+#     # 如果没有输入房间号，逐个
+#     if room_id == -1:
+#         global report
+#         data = []
+#         rows = []
+        
+#         # 收集报告数据
+#         for i in range(1, 6):
+#             report = StatisticController.create_report(i, type_report, year, month, week)
+#             data.append(list(report.values())[1:-2])
+#             rows.append('房间' + str(report['room_id']))
+        
+#         columns = list(report.keys())[1:-2]
+#         rows = tuple(rows)
+
+#         # 创建DataFrame
+#         df = pd.DataFrame(data, columns=columns, index=rows)
+
+#         # 创建图形和坐标轴
+#         fig, ax = plt.subplots(figsize=(15, 6))
+
+#         # 绘制每个房间的数据作为折线图
+#         for i, row in enumerate(rows):
+#             ax.plot(columns, df.iloc[i], label=row, marker='o', linestyle='-', linewidth=2, markersize=6)
+
+#         # 定制网格和坐标轴
+#         ax.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
+#         ax.set_facecolor('whitesmoke')
+
+#         # 设置图表标题
+#         ax.set_title('各房间报告数据 (折线图)', fontsize=16, fontweight='bold', color='darkblue')
+
+#         # 设置x轴和y轴标签
+#         ax.set_xlabel('报告类型', fontsize=12)
+#         ax.set_ylabel('数值', fontsize=12)
+
+#         # 添加图例
+#         ax.legend(title="房间", title_fontsize=10, fontsize=9, loc='upper left')
+
+#         # 调整图表的布局和间距
+#         plt.subplots_adjust(left=0.1, right=0.9, bottom=0.2, top=0.85)
+
+#         # 将图表保存为高分辨率PNG文件
+#         plt.savefig('./result/report_line_plot.png', dpi=300)
+
+#         # 显示图表（可选，仅在交互式会话中使用）
+#         plt.show()

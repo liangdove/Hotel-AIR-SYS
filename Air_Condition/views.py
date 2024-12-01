@@ -266,7 +266,7 @@ def manager(request):
 
 
 def manager_month(request):
-    month = request.GET["month"]  # 字符串，格式2020-06
+    month = request.GET["month"]  # 字符串，格式2024-11
     year = month.split('-')[0]
     month = month.split('-')[1]
     # *****************打印月报表**********************
@@ -285,7 +285,7 @@ def manager_month(request):
 
 
 def manager_week(request):
-    week = request.GET["week"]  # 字符串，格式2020-W24
+    week = request.GET["week"]  # 字符串，格式2024-W48
     #
     # # *****************打印周报表**********************
     # return HttpResponseRedirect('/manager/')
