@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
@@ -11,297 +11,126 @@
 
     <title>Monitor</title>
     <link rel="shortcut icon" href="img/favicon.ico">
-
-    <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Custom styles -->
+    <link rel="stylesheet" href="/static/css/monitor.css">
     <style>
-        :root {
-            --primary-color: #4caf50;
-            --secondary-color: #343a40;
-            --background-color: #f8f9fa;
-            --text-color: #fff;
-            --border-color: #ddd;
-            --hover-color: #4caf50;
-            --accent-color: #f9f9f9;
-        }
-        
         body {
-            font-family: 'Microsoft YaHei', sans-serif;
-            background: 
-                radial-gradient(circle, var(--background-color) 1px, transparent 1px) 0 0 / 20px 20px,
-                radial-gradient(circle, var(--background-color) 1px, transparent 1px) 10px 10px / 20px 20px;
-            background-color: var(--primary-color);
-            margin: 0;
-            padding: 0;
-        }
-        
-        .header {
-            background-color: var(--primary-color);
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-color);
-        }
-        
-        .side-navbar {
-            width: 250px;
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .side-navbar ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .side-navbar ul li {
-            margin: 10px 0;
-        }
-        
-        .side-navbar ul li a {
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 10px;
-            display: block;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        
-        .side-navbar ul li a:hover {
-            background-color: var(--hover-color);
-            color: var(--text-color);
-        }
-        
-        .content-inner {
-            margin-left: 250px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column; /* 让内容垂直排列 */
-            justify-content: flex-start;
-            align-items: center;
-            height: 100vh;
-            overflow-y: auto;
-        }
-        
-        .form-cont {
-            background-color: var(--accent-color);
-            padding: 45px;
-            border-radius: 15px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        
-        .screen {
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            margin: 10px;
-            border-radius: 10px;
-            background-color: var(--accent-color);
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            width: 100%;  
-            max-width: 400px; 
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        
-        table {
-            width: 100%;
-            table-layout: fixed;
-        }
-
-        /* Make sure the content fits within the page */
-        .screen table td {
-            padding: 5px;
-            font-size: 14px;
-        }
-
-        @media (max-width: 768px) {
-            .side-navbar {
-                width: 200px;
-            }
-
-            .content-inner {
-                margin-left: 0;
-                padding: 10px;
-            }
-
-            .screen {
-                width: 100%;
-                max-width: none;
-                margin-bottom: 10px;
-            }
-
-            .screen table td {
-                font-size: 12px;
-            }
+            background-color:#DCDDDF6B;
         }
     </style>
-
     <script type="text/javascript">
         $(document).ready(function(){
             setTimeout(function(){
                 location.reload();
-            }, 10000);
+            }, 3500);
         });
     </script>
 </head>
+
 <body>
+    <!-- 外层容器，用于限制页面宽度 -->
+    <div class="outer-container">
+        <header class="header">
+            <nav class="navbar navbar-expand-lg">
+                <h3 class='col-sm-12' style="text-align:center">空调管理员</h3>
+            </nav>
+        </header>
 
-<header class="header">
-    <nav class="navbar navbar-expand-lg ">
-        <h3 class='col-sm-12' style="text-align:center">空调管理员AC</h3>
-    </nav>
-</header>
-
-<div class="page-content d-flex align-items-stretch">
-    <nav class="side-navbar">
-        <div class="sidebar-header d-flex align-items-center">
-            <div class="avatar"></div>
-            <div class="title">
-                <h4 class="h4">SWITCH</h4>
-            </div>
-        </div>
-        <hr>
-        <ul class="list-unstyled">
-            <li> <a href="/recp"><i class="icon-home"></i>前台</a></li>
-            <li> <a href="/manager"> <i class="fa fa-bar-chart"></i>经理</a></li>
-        </ul>
-        <span class="heading">Extras</span>
-        <ul class="list-unstyled">
-            <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
-        </ul>
-    </nav>
-
-    <div class="content-inner form-cont">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card form" id="form1">
-                    <div class="card-header">
-                        <h5>监视界面</h5>
+        <div class="page-content d-flex align-items-stretch">
+            <!-- 侧边栏 -->
+            <nav class="side-navbar">
+                <div class="sidebar-header d-flex align-items-center">
+                    <div class="avatar"></div>
+                    <div class="title">
+                        <h4 class="h4">切换身份</h4>
                     </div>
-                    <br>
+                </div>
+                <hr>
+                <!-- 导航菜单 -->
+                <ul class="list-unstyled">
+                    <li><a href="/recp"><i class="icon-home"></i>前台</a></li>
+                    <li><a href="/manager"><i class="fa fa-bar-chart"></i>经理</a></li>
 
-                    <table>
-                        <tr>
-                            <td class="screen">
-                                <table style="width:100%">
-                                    <tr><td><h5>房间1：{{room_id.1}}</h5></td></tr>
-                                    <tr>
-                                        <td><p id="r1">状态:{{ state.1 }}</p></td>
-                                        <td><p>风速：{{fan_speed.1}}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>室内温度：{{current_temp.1}}℃</p></td>
-                                        <td><p>费用：{{ fee.1 }}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>设定温度：{{target_temp.1}}℃</p></td>
-                                        <td><p>费率：{{fee_rate.1}}</p></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
+            </nav>
 
-                        <tr>
-                            <td class="screen">
-                                <table style="width:100%">
-                                    <tr><td><h5>房间2：{{room_id.2}}</h5></td></tr>
-                                    <tr>
-                                        <td><p id="r2">状态:{{ state.2 }}</p></td>
-                                        <td><p>风速：{{fan_speed.2}}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>室内温度：{{current_temp.2}}℃</p></td>
-                                        <td><p>费用：{{ fee.2 }}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>设定温度：{{target_temp.2}}℃</p></td>
-                                        <td><p>费率：{{fee_rate.2}}</p></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
+            <div class="content-inner form-cont">
+                <!-- 监视界面卡片 -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card form" id="form1">
+                            <div class="card-header">
+                                <h5>监视界面</h5>
+                            </div>
+                            <br>
 
-                        <tr>
-                            <td class="screen">
-                                <table style="width:100%">
-                                    <tr><td><h5>房间3：{{room_id.3}}</h5></td></tr>
-                                    <tr>
-                                        <td><p id="r3">状态:{{ state.3 }}</p></td>
-                                        <td><p>风速：{{fan_speed.3}}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>室内温度：{{current_temp.3}}℃</p></td>
-                                        <td><p>费用：{{ fee.3 }}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>设定温度：{{target_temp.3}}℃</p></td>
-                                        <td><p>费率：{{fee_rate.3}}</p></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="screen">
-                                <table style="width:100%">
-                                    <tr><td><h5>房间4：{{room_id.4}}</h5></td></tr>
-                                    <tr>
-                                        <td><p id="r4">状态:{{ state.4 }}</p></td>
-                                        <td><p>风速：{{fan_speed.4}}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>室内温度：{{current_temp.4}}℃</p></td>
-                                        <td><p>费用：{{ fee.4 }}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>设定温度：{{target_temp.4}}℃</p></td>
-                                        <td><p>费率：{{fee_rate.4}}</p></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="screen">
-                                <table style="width:100%">
-                                    <tr><td><h5>房间5：{{room_id.5}}</h5></td></tr>
-                                    <tr>
-                                        <td><p id="r5">状态:{{ state.5 }}</p></td>
-                                        <td><p>风速：{{fan_speed.5}}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>室内温度：{{current_temp.5}}℃</p></td>
-                                        <td><p>费用：{{ fee.5 }}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><p>设定温度：{{target_temp.5}}℃</p></td>
-                                        <td><p>费率：{{fee_rate.5}}</p></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
+                            <table class="table table-bordered">
+                                <!-- 房间1 -->
+                                <tr>
+                                    <td class="screen">
+                                        <h5>房间1：{{room_id.1}}</h5>
+                                        <p>状态: {{ state.1 }}</p>
+                                        <p>风速：{{ fan_speed.1 }}</p>
+                                        <p>室内温度：{{ current_temp.1 }}℃</p>
+                                        <p>费用：{{ fee.1 }}</p>
+                                        <p>设定温度：{{ target_temp.1 }}℃</p>
+                                        <p>费率：{{ fee_rate.1 }}</p>
+                                    </td>
+                                </tr>
+                                <!-- 房间2 -->
+                                <tr>
+                                    <td class="screen">
+                                        <h5>房间2：{{room_id.2}}</h5>
+                                        <p>状态: {{ state.2 }}</p>
+                                        <p>风速：{{ fan_speed.2 }}</p>
+                                        <p>室内温度：{{ current_temp.2 }}℃</p>
+                                        <p>费用：{{ fee.2 }}</p>
+                                        <p>设定温度：{{ target_temp.2 }}℃</p>
+                                        <p>费率：{{ fee_rate.2 }}</p>
+                                    </td>
+                                </tr>
+                                <!-- 房间3 -->
+                                <tr>
+                                    <td class="screen">
+                                        <h5>房间3：{{room_id.3}}</h5>
+                                        <p>状态: {{ state.3 }}</p>
+                                        <p>风速：{{ fan_speed.3 }}</p>
+                                        <p>室内温度：{{ current_temp.3 }}℃</p>
+                                        <p>费用：{{ fee.3 }}</p>
+                                        <p>设定温度：{{ target_temp.3 }}℃</p>
+                                        <p>费率：{{ fee_rate.3 }}</p>
+                                    </td>
+                                </tr>
+                                <!-- 房间4 -->
+                                <tr>
+                                    <td class="screen">
+                                        <h5>房间4：{{room_id.4}}</h5>
+                                        <p>状态: {{ state.4 }}</p>
+                                        <p>风速：{{ fan_speed.4 }}</p>
+                                        <p>室内温度：{{ current_temp.4 }}℃</p>
+                                        <p>费用：{{ fee.4 }}</p>
+                                        <p>设定温度：{{ target_temp.4 }}℃</p>
+                                        <p>费率：{{ fee_rate.4 }}</p>
+                                    </td>
+                                </tr>
+                                <!-- 房间5 -->
+                                <tr>
+                                    <td class="screen">
+                                        <h5>房间5：{{room_id.5}}</h5>
+                                        <p>状态: {{ state.5 }}</p>
+                                        <p>风速：{{ fan_speed.5 }}</p>
+                                        <p>室内温度：{{ current_temp.5 }}℃</p>
+                                        <p>费用：{{ fee.5 }}</p>
+                                        <p>设定温度：{{ target_temp.5 }}℃</p>
+                                        <p>费率：{{ fee_rate.5 }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

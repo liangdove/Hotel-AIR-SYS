@@ -74,7 +74,7 @@ class ChartData:
 room_c = RoomCounter  # 静态
 room_info = RoomInfo
 scheduler = Scheduler()  # 属于model模块
-sc = StatisticController
+sc = StatisticController()
 room_b = RoomBuffer
 speed_ch = ["", "高速", "中速", "低速"]
 state_ch = ["", "服务中", "等待", "关机", "休眠"]
@@ -117,7 +117,7 @@ def power(request):  # 客户端-电源键
     room_id = get_room_id(request)
     if not room_b.on_flag[room_id]:
         room_b.on_flag[room_id] = True  # 开机
-        scheduler.request_on(room_id, room_b.init_temp[room_id])  # 创建room对象
+        scheduler.request_on(room_id, room_b.init_temp[room_id])  # 创建room对象，通过调用scheduler类
         scheduler.set_init_temp(room_id, room_b.init_temp[room_id])  # 这里初始温度，和requeston的温度一样，如何简化？
         return HttpResponseRedirect('/on/')
     else:
@@ -153,7 +153,7 @@ def change_low(request):  # 低速
         return HttpResponseRedirect('/')
 
 
-def change_up(request):  # 升温
+def change_up(request):  # 升温                                                                     
     room_id = get_room_id(request)
     if room_b.on_flag[room_id]:  # 这里target_temp如何保证和内核同步？
         temperature = room_b.target_temp[room_id] + 1
@@ -204,17 +204,17 @@ def monitor(request):
     return render(request, 'monitor.html', RoomsInfo(rooms).dic)
 
 
-def tst(request):
-    dic = {
-        "room_id": 1,
-        "state": "挂起",
-        "fan_speed": "高速",
-        "current_temp": 28,
-        "fee": 2,
-        "target_temp": 25,
-        "fee_rate": 0.5
-    }
-    return render(request, 'monitor.html')
+# def tst(request):
+#     dic = {
+#         "room_id": 1,
+#         "state": "挂起",
+#         "fan_speed": "高速",
+#         "current_temp": 28,
+#         "fee": 2,
+#         "target_temp": 25,
+#         "fee_rate": 0.5
+#     }
+#     return render(request, 'monitor.html')
 
 
 # ===============================前台==============================
@@ -249,7 +249,7 @@ def reception(request):
         """打印账单"""
 
         # 首先先生成账单
-        StatisticController.print_bill(room_id, begin_date, end_date)
+        sc.print_bill(room_id, begin_date, end_date)
 
         # 获取账单，返回生成的文件
         from django.http import FileResponse
@@ -277,10 +277,10 @@ def manager_month(request):
 
     # 获取月报，返回生成的文件
     from django.http import FileResponse
-    file = open('./result/report.png', 'rb')
+    file = open('./result/report_line_plot_month.png', 'rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="month.png"'
+    response['Content-Disposition'] = 'attachment;filename="report_line_plot_month.png"'
     return response
 
 
@@ -295,14 +295,14 @@ def manager_week(request):
     print(year)
     print(week)
     # 首先先生成周报
-    StatisticController.draw_report(-1, 2, year, week)
+    StatisticController.draw_report(-1, 2, year, -1, week)
 
     # 获取周报，返回生成的文件
     from django.http import FileResponse
-    file = open('./result/report.png', 'rb')
+    file = open('./result/report_line_plot_week.png', 'rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="week.png"'
+    response['Content-Disposition'] = 'attachment;filename="report_line_plot_week.png"'
     return response
 
 
@@ -329,7 +329,7 @@ def report_printer(request):
         """打印周报"""
 
         # 首先先生成周报
-        StatisticController.print_report(room_id, 2, year, week)
+        StatisticController.print_report(room_id, 2, year, -1, week)
 
         # 获取周报，返回生成的文件
         from django.http import FileResponse

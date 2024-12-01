@@ -16,12 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from Air_Condition.views import *
+from Air_Condition.customer import login_view, register_view,logout_view
 # 对应的网页及操作
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', tst),
-    path('', client_off),
+    path('', client_off), # 修改
     path('on/', client_on),
+    
+    # 注册与登录
+    path('login', login_view),
+    path('register/',register_view),
+    path('logout', logout_view),
 
     # 测试
     path('get/', get),
